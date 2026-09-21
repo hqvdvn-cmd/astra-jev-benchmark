@@ -1,0 +1,33 @@
+{
+  "tasks": [
+    {
+      "task_id": "code-write-001",
+      "kind": "code_write",
+      "prompt": "Реализуй функцию slugify в slugify.py. Она должна приводить строку к нижнему регистру, заменять группы неалфавитно-цифровых символов одним дефисом и убирать дефисы по краям. Запусти тесты.",
+      "fixture_dir": "code-write-001/starter",
+      "verifier": "python -m unittest -v",
+      "allowed_files": ["slugify.py"],
+      "requirements": ["slug-lowercase", "slug-separators", "slug-trim"],
+      "review_changed_lines_above": 30
+    },
+    {
+      "task_id": "bug-fix-001",
+      "kind": "bug_fix",
+      "prompt": "Исправь ошибку в clamp.py: функция clamp должна ограничивать значение включительно между нижней и верхней границей и отклонять перепутанные границы. Запусти тесты.",
+      "fixture_dir": "bug-fix-001/starter",
+      "verifier": "python -m unittest -v",
+      "allowed_files": ["clamp.py"],
+      "requirements": ["clamp-inclusive-bounds", "clamp-reject-reversed-bounds"],
+      "review_changed_lines_above": 30
+    },
+    {
+      "task_id": "browser-001",
+      "kind": "browser",
+      "prompt": "На локальной тестовой странице заполни поле email значением test@example.com и отправь форму. Успех подтверждается состоянием submitted.",
+      "fixture_dir": "browser-001",
+      "verifier": "",
+      "browser_profile": "synthetic",
+      "requirements": ["browser-submitted"]
+    }
+  ]
+}

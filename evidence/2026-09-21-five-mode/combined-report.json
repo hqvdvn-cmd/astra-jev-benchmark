@@ -1,0 +1,411 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-21T18:03:02.310208+00:00",
+  "records": 45,
+  "run_metadata": {
+    "harness_versions": [
+      "0.1.0"
+    ],
+    "codex_versions": [
+      "codex-cli 0.155.0-alpha.9.2"
+    ],
+    "astra_models": [
+      "gpt-6-astra"
+    ],
+    "reasoning_efforts": [
+      "xhigh"
+    ],
+    "jev_models": [
+      "jev-1.13.0"
+    ],
+    "pricing_sources": [
+      "https://developers.openai.com/api/docs/pricing ; https://typesafe.ai/blog/introducing-system-one-models-and-jev"
+    ],
+    "pricing_dates": [
+      "2026-09-21"
+    ]
+  },
+  "modes": {
+    "astra_only": {
+      "attempts": 9,
+      "successes": 9,
+      "success_rate": 1.0,
+      "duration_total_s": 500.4725824999914,
+      "mean_duration_s": 55.608064722221265,
+      "astra_input_tokens": 1171336,
+      "astra_cached_input_tokens": 941824,
+      "astra_cache_write_input_tokens": 0,
+      "astra_output_tokens": 10546,
+      "jev_input_tokens": 0,
+      "jev_calls": 0,
+      "jev_strategy_calls": 0,
+      "jev_guard_calls": 0,
+      "mean_jev_calls_per_attempt": 0.0,
+      "jev_unavailable": 0,
+      "pass_count": 0,
+      "retry_count": 0,
+      "improved_after_retry": 0,
+      "guard_unavailable": 0,
+      "estimated_cost_usd": 3.764244,
+      "cost_per_success_usd": 0.41824933333333336,
+      "cost_status": "calculated"
+    },
+    "astra_jev_observe": {
+      "attempts": 9,
+      "successes": 9,
+      "success_rate": 1.0,
+      "duration_total_s": 570.9212383999984,
+      "mean_duration_s": 63.43569315555538,
+      "astra_input_tokens": 1328137,
+      "astra_cached_input_tokens": 1035008,
+      "astra_cache_write_input_tokens": 0,
+      "astra_output_tokens": 11359,
+      "jev_input_tokens": 3882,
+      "jev_calls": 12,
+      "jev_strategy_calls": 0,
+      "jev_guard_calls": 0,
+      "mean_jev_calls_per_attempt": 1.3333333333333333,
+      "jev_unavailable": 0,
+      "pass_count": 0,
+      "retry_count": 0,
+      "improved_after_retry": 0,
+      "guard_unavailable": 0,
+      "estimated_cost_usd": 4.534411044,
+      "cost_per_success_usd": 0.5038234493333333,
+      "cost_status": "calculated"
+    },
+    "astra_jev_offload": {
+      "attempts": 9,
+      "successes": 9,
+      "success_rate": 1.0,
+      "duration_total_s": 396.9068745000113,
+      "mean_duration_s": 44.10076383333459,
+      "astra_input_tokens": 993937,
+      "astra_cached_input_tokens": 801280,
+      "astra_cache_write_input_tokens": 0,
+      "astra_output_tokens": 7586,
+      "jev_input_tokens": 3840,
+      "jev_calls": 12,
+      "jev_strategy_calls": 12,
+      "jev_guard_calls": 0,
+      "mean_jev_calls_per_attempt": 1.3333333333333333,
+      "jev_unavailable": 0,
+      "pass_count": 0,
+      "retry_count": 0,
+      "improved_after_retry": 0,
+      "guard_unavailable": 0,
+      "estimated_cost_usd": 3.10731128,
+      "cost_per_success_usd": 0.3452568088888889,
+      "cost_status": "calculated"
+    },
+    "astra_jev_guarded": {
+      "attempts": 9,
+      "successes": 8,
+      "success_rate": 0.8888888888888888,
+      "duration_total_s": 575.8188214999682,
+      "mean_duration_s": 63.97986905555202,
+      "astra_input_tokens": 1390820,
+      "astra_cached_input_tokens": 1093632,
+      "astra_cache_write_input_tokens": 0,
+      "astra_output_tokens": 12122,
+      "jev_input_tokens": 3169,
+      "jev_calls": 8,
+      "jev_strategy_calls": 0,
+      "jev_guard_calls": 8,
+      "mean_jev_calls_per_attempt": 0.8888888888888888,
+      "jev_unavailable": 0,
+      "pass_count": 10,
+      "retry_count": 1,
+      "improved_after_retry": 0,
+      "guard_unavailable": 0,
+      "estimated_cost_usd": 4.671745098,
+      "cost_per_success_usd": 0.58396813725,
+      "cost_status": "calculated"
+    },
+    "astra_jev_offload_guarded": {
+      "attempts": 9,
+      "successes": 9,
+      "success_rate": 1.0,
+      "duration_total_s": 399.7508099999686,
+      "mean_duration_s": 44.41675666666318,
+      "astra_input_tokens": 1017070,
+      "astra_cached_input_tokens": 817664,
+      "astra_cache_write_input_tokens": 0,
+      "astra_output_tokens": 8045,
+      "jev_input_tokens": 7637,
+      "jev_calls": 21,
+      "jev_strategy_calls": 12,
+      "jev_guard_calls": 9,
+      "mean_jev_calls_per_attempt": 2.3333333333333335,
+      "jev_unavailable": 0,
+      "pass_count": 9,
+      "retry_count": 0,
+      "improved_after_retry": 0,
+      "guard_unavailable": 0,
+      "estimated_cost_usd": 3.214294754,
+      "cost_per_success_usd": 0.35714386155555555,
+      "cost_status": "calculated"
+    }
+  },
+  "comparisons_to_astra_only": {
+    "astra_jev_observe": {
+      "duration_change_pct": 14.076426634221912,
+      "astra_input_token_change_pct": 13.386509080229755,
+      "success_rate_change_points": 0.0,
+      "cost_savings_pct": -20.46007230137047
+    },
+    "astra_jev_offload": {
+      "duration_change_pct": -20.693582749856603,
+      "astra_input_token_change_pct": -15.14501389865931,
+      "success_rate_change_points": 0.0,
+      "cost_savings_pct": 17.451916507006462
+    },
+    "astra_jev_guarded": {
+      "duration_change_pct": 15.055018323601796,
+      "astra_input_token_change_pct": 18.737919777075067,
+      "success_rate_change_points": -11.111111111111116,
+      "cost_savings_pct": -39.622012687009644
+    },
+    "astra_jev_offload_guarded": {
+      "duration_change_pct": -20.125332739885803,
+      "astra_input_token_change_pct": -13.170089538783063,
+      "success_rate_change_points": 0.0,
+      "cost_savings_pct": 14.609819289079034
+    }
+  },
+  "task_comparisons_to_astra_only": {
+    "browser-001": {
+      "astra_jev_observe": {
+        "duration_change_pct": 10.842810505922097,
+        "success_rate_change_points": 0.0,
+        "cost_savings_pct": -82.20441962068303
+      },
+      "astra_jev_offload": {
+        "duration_change_pct": -36.94852958650213,
+        "success_rate_change_points": 0.0,
+        "cost_savings_pct": 14.37238581801841
+      },
+      "astra_jev_guarded": {
+        "duration_change_pct": -1.263546204559465,
+        "success_rate_change_points": 0.0,
+        "cost_savings_pct": -38.73891699019777
+      },
+      "astra_jev_offload_guarded": {
+        "duration_change_pct": -41.30792238841428,
+        "success_rate_change_points": 0.0,
+        "cost_savings_pct": 56.46184360354516
+      }
+    },
+    "bug-fix-001": {
+      "astra_jev_observe": {
+        "duration_change_pct": 0.3207767433996554,
+        "success_rate_change_points": 0.0,
+        "cost_savings_pct": 5.32028119120007
+      },
+      "astra_jev_offload": {
+        "duration_change_pct": -19.70685875576047,
+        "success_rate_change_points": 0.0,
+        "cost_savings_pct": 20.54537574008574
+      },
+      "astra_jev_guarded": {
+        "duration_change_pct": 30.697721129154758,
+        "success_rate_change_points": -33.333333333333336,
+        "cost_savings_pct": -105.4591456113536
+      },
+      "astra_jev_offload_guarded": {
+        "duration_change_pct": -20.408988375436667,
+        "success_rate_change_points": 0.0,
+        "cost_savings_pct": 14.68814990978265
+      }
+    },
+    "code-write-001": {
+      "astra_jev_observe": {
+        "duration_change_pct": 31.238516822781254,
+        "success_rate_change_points": 0.0,
+        "cost_savings_pct": -27.941151782878254
+      },
+      "astra_jev_offload": {
+        "duration_change_pct": -16.48442022934096,
+        "success_rate_change_points": 0.0,
+        "cost_savings_pct": 14.670064291848526
+      },
+      "astra_jev_guarded": {
+        "duration_change_pct": 2.1366414669658096,
+        "success_rate_change_points": 0.0,
+        "cost_savings_pct": -0.5992012046633701
+      },
+      "astra_jev_offload_guarded": {
+        "duration_change_pct": -12.803745388071148,
+        "success_rate_change_points": 0.0,
+        "cost_savings_pct": -3.70896218368763
+      }
+    }
+  },
+  "pairs": [
+    {
+      "task_id": "browser-001",
+      "mode": "astra_jev_guarded",
+      "attempts": 3,
+      "successful_tasks": 3,
+      "mean_duration_s": 21.74041206666152,
+      "median_duration_s": 22.2053992000001,
+      "total_cost_usd": "0.821203974",
+      "mean_attempt_cost_usd": "0.273734658",
+      "cost_per_success_usd": "0.273734658"
+    },
+    {
+      "task_id": "browser-001",
+      "mode": "astra_jev_observe",
+      "attempts": 3,
+      "successful_tasks": 3,
+      "mean_duration_s": 24.406065666669747,
+      "median_duration_s": 24.070546300004935,
+      "total_cost_usd": "1.078478892",
+      "mean_attempt_cost_usd": "0.359492964",
+      "cost_per_success_usd": "0.359492964"
+    },
+    {
+      "task_id": "browser-001",
+      "mode": "astra_jev_offload",
+      "attempts": 3,
+      "successful_tasks": 3,
+      "mean_duration_s": 13.883068466670617,
+      "median_duration_s": 14.22045110000181,
+      "total_cost_usd": "0.506834986",
+      "mean_attempt_cost_usd": "0.1689449953333333333333333333",
+      "cost_per_success_usd": "0.1689449953333333333333333333"
+    },
+    {
+      "task_id": "browser-001",
+      "mode": "astra_jev_offload_guarded",
+      "attempts": 3,
+      "successful_tasks": 3,
+      "mean_duration_s": 12.92318999999649,
+      "median_duration_s": 13.030861300008837,
+      "total_cost_usd": "0.25770496",
+      "mean_attempt_cost_usd": "0.08590165333333333333333333333",
+      "cost_per_success_usd": "0.08590165333333333333333333333"
+    },
+    {
+      "task_id": "browser-001",
+      "mode": "astra_only",
+      "attempts": 3,
+      "successful_tasks": 3,
+      "mean_duration_s": 22.01862759999737,
+      "median_duration_s": 21.853670199998305,
+      "total_cost_usd": "0.591906",
+      "mean_attempt_cost_usd": "0.197302",
+      "cost_per_success_usd": "0.197302"
+    },
+    {
+      "task_id": "bug-fix-001",
+      "mode": "astra_jev_guarded",
+      "attempts": 3,
+      "successful_tasks": 2,
+      "mean_duration_s": 102.0449447666615,
+      "median_duration_s": 69.93082759999379,
+      "total_cost_usd": "2.48234370",
+      "mean_attempt_cost_usd": "0.82744790",
+      "cost_per_success_usd": "1.24117185"
+    },
+    {
+      "task_id": "bug-fix-001",
+      "mode": "astra_jev_observe",
+      "attempts": 3,
+      "successful_tasks": 3,
+      "mean_duration_s": 78.32751813333016,
+      "median_duration_s": 77.73873409999942,
+      "total_cost_usd": "1.715871076",
+      "mean_attempt_cost_usd": "0.5719570253333333333333333333",
+      "cost_per_success_usd": "0.5719570253333333333333333333"
+    },
+    {
+      "task_id": "bug-fix-001",
+      "mode": "astra_jev_offload",
+      "attempts": 3,
+      "successful_tasks": 3,
+      "mean_duration_s": 62.69052813333595,
+      "median_duration_s": 60.18520900000294,
+      "total_cost_usd": "1.43994821",
+      "mean_attempt_cost_usd": "0.4799827366666666666666666667",
+      "cost_per_success_usd": "0.4799827366666666666666666667"
+    },
+    {
+      "task_id": "bug-fix-001",
+      "mode": "astra_jev_offload_guarded",
+      "attempts": 3,
+      "successful_tasks": 3,
+      "mean_duration_s": 62.142325933329026,
+      "median_duration_s": 64.2088117999956,
+      "total_cost_usd": "1.546098128",
+      "mean_attempt_cost_usd": "0.5153660426666666666666666667",
+      "cost_per_success_usd": "0.5153660426666666666666666667"
+    },
+    {
+      "task_id": "bug-fix-001",
+      "mode": "astra_only",
+      "attempts": 3,
+      "successful_tasks": 3,
+      "mean_duration_s": 78.07706506666727,
+      "median_duration_s": 76.15295100001094,
+      "total_cost_usd": "1.812290",
+      "mean_attempt_cost_usd": "0.6040966666666666666666666667",
+      "cost_per_success_usd": "0.6040966666666666666666666667"
+    },
+    {
+      "task_id": "code-write-001",
+      "mode": "astra_jev_guarded",
+      "attempts": 3,
+      "successful_tasks": 3,
+      "mean_duration_s": 68.15425033333304,
+      "median_duration_s": 66.72557019999658,
+      "total_cost_usd": "1.368197424",
+      "mean_attempt_cost_usd": "0.456065808",
+      "cost_per_success_usd": "0.456065808"
+    },
+    {
+      "task_id": "code-write-001",
+      "mode": "astra_jev_observe",
+      "attempts": 3,
+      "successful_tasks": 3,
+      "mean_duration_s": 87.57349566666623,
+      "median_duration_s": 67.60992909999914,
+      "total_cost_usd": "1.740061076",
+      "mean_attempt_cost_usd": "0.5800203586666666666666666667",
+      "cost_per_success_usd": "0.5800203586666666666666666667"
+    },
+    {
+      "task_id": "code-write-001",
+      "mode": "astra_jev_offload",
+      "attempts": 3,
+      "successful_tasks": 3,
+      "mean_duration_s": 55.72869489999721,
+      "median_duration_s": 56.04885049999575,
+      "total_cost_usd": "1.160528084",
+      "mean_attempt_cost_usd": "0.3868426946666666666666666667",
+      "cost_per_success_usd": "0.3868426946666666666666666667"
+    },
+    {
+      "task_id": "code-write-001",
+      "mode": "astra_jev_offload_guarded",
+      "attempts": 3,
+      "successful_tasks": 3,
+      "mean_duration_s": 58.18475406666403,
+      "median_duration_s": 59.5261548999988,
+      "total_cost_usd": "1.410491666",
+      "mean_attempt_cost_usd": "0.4701638886666666666666666667",
+      "cost_per_success_usd": "0.4701638886666666666666666667"
+    },
+    {
+      "task_id": "code-write-001",
+      "mode": "astra_only",
+      "attempts": 3,
+      "successful_tasks": 3,
+      "mean_duration_s": 66.72850149999915,
+      "median_duration_s": 65.28447969999979,
+      "total_cost_usd": "1.360048",
+      "mean_attempt_cost_usd": "0.4533493333333333333333333333",
+      "cost_per_success_usd": "0.4533493333333333333333333333"
+    }
+  ]
+}

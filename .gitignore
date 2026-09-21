@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.venv/
+benchmark-config.toml
+results/
+.jev-astra-workspaces/
+benchmarks/jev-astra/results/

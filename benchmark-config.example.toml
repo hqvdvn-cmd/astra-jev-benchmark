@@ -1,0 +1,10 @@
+# Verified 2026-09-21. Recheck both sources before a new published comparison.
+# Astra: Standard, short context. Jev output tokens are free as of this date.
+astra_input_usd_per_million = 10
+astra_cached_input_usd_per_million = 1
+astra_cache_write_usd_per_million = 12.5
+astra_output_usd_per_million = 50
+jev_input_usd_per_million = 0.042
+extra_services_usd = 0
+pricing_source = "https://developers.openai.com/api/docs/pricing ; https://typesafe.ai/blog/introducing-system-one-models-and-jev"
+pricing_date = "2026-09-21"

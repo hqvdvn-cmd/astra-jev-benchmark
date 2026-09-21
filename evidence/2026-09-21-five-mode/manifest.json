@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-21",
+  "source_commit": "326533aff51ae8c3d427017b836fef69e826d2d0",
+  "records": 45,
+  "groups": {
+    "full-five-mode": 45
+  },
+  "sha256": {
+    "combined-report.json": "9f74174678b5108165ef173120203421e49720ebf953ec5d2d93f6b95772658a",
+    "full-five-mode/attempts.jsonl": "067a64c63dda6e4b94616c5cdd7d5c9904519d6e23bc0b24a708f6e7d58dd8a7",
+    "full-five-mode/report.json": "eb2397ee37dd85e8489dc3cdf471bea23b4f595a22c8f085b432bf7c450aceb8"
+  }
+}
