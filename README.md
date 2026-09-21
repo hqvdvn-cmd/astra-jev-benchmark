@@ -1,143 +1,120 @@
 # Astra + Jev Benchmark
 
-Воспроизводимое сравнение Astra и Astra с Jev на задачах написания кода, исправления ошибки и работы с локальной браузерной формой.
+**English** | [Русский](README.ru.md)
 
-Замер относится к изолированному Codex CLI: одна модель `gpt-6-astra`, уровень рассуждения `xhigh`, отключённые пользовательские дополнения, перехватчики, приложения, память и параллельные агенты. Jev не переключает задачу на Luna, Terra или Sol. Он принимает короткие решения из заранее заданного списка, а работу выполняет Astra.
+A reproducible comparison of Astra alone and Astra assisted by Jev on code writing, bug fixing, and a local browser-form task.
 
-## Короткий вывод
+The benchmark isolates one working model: `gpt-6-astra` at `xhigh` reasoning. User plugins, hooks, apps, memory, and parallel agents are disabled. Jev does not route work to Luna, Terra, Sol, or another language model. It selects bounded decisions from task-specific allow lists; Astra still performs the work.
 
-Полная серия включала 45 попыток: три задания, пять режимов и три повтора каждого сочетания.
+## Result
 
-| Режим | Успешно | Среднее время | Общий расход | Цена успешной задачи |
+The published run contains 45 attempts: three tasks, five modes, and three repeats for every task-mode pair.
+
+| Mode | Passed | Mean time | Total cost | Cost per success |
 |---|---:|---:|---:|---:|
-| Astra | 9/9 | 55,6 с | $3,764 | $0,418 |
-| Наблюдение Jev | 9/9 | 63,4 с | $4,534 | $0,504 |
-| Разгрузка Jev | 9/9 | 44,1 с | $3,107 | $0,345 |
-| Проверка с возвратом | 8/9 | 64,0 с | $4,672 | $0,584 |
-| Разгрузка + проверка | 9/9 | 44,4 с | $3,214 | $0,357 |
+| Astra | 9/9 | 55.6 s | $3.764 | $0.418 |
+| Jev Observe | 9/9 | 63.4 s | $4.534 | $0.504 |
+| Jev Offload | 9/9 | 44.1 s | $3.107 | $0.345 |
+| Guarded retry | 8/9 | 64.0 s | $4.672 | $0.584 |
+| Offload + guard | 9/9 | 44.4 s | $3.214 | $0.357 |
 
-![Сравнение пяти режимов по успешности, времени и цене](docs/images/jev-benchmark-overview.png)
+![Five-mode benchmark overview](docs/images/en/benchmark-overview.png)
 
-На этом наборе режим разгрузки дал лучший результат:
+Jev Offload produced the best aggregate result on this task set. Compared with Astra alone, it reduced:
 
-- среднее время уменьшилось на 20,7%;
-- входные токены Astra уменьшились на 15,1%;
-- цена успешной задачи уменьшилась на 17,5%;
-- успешность сохранилась: 9/9.
+- mean duration by 20.7%;
+- Astra input tokens by 15.1%;
+- cost per successful task by 17.5%.
 
-Совмещённый режим добавил итоговую проверку Jev и сохранил большую часть экономии: время уменьшилось на 20,1%, входные токены Astra — на 13,2%, цена успешной задачи — на 14,6%. Успешность составила 9/9.
+Success stayed at 9/9. Offload + guard kept a 9/9 success rate while reducing mean duration by 20.1% and cost per success by 14.6%.
 
-![Изменение времени, входных токенов Astra и цены успешной задачи](docs/images/jev-benchmark-savings.png)
+![Savings from Jev offloading](docs/images/en/benchmark-savings.png)
 
-Наблюдение после завершения задачи увеличило цену успешного результата на 20,5%. Проверка с возвратом увеличила её на 39,6% и получила 8 успешных результатов из 9. Дополнительные обращения к Jev сами по себе не дали экономии; она появилась, когда Jev выбирал ограниченную стратегию до запуска Astra.
+Observe increased cost per success by 20.5%. Guarded retry increased it by 39.6% and passed 8 of 9 attempts. Jev reduced cost only when it selected a bounded strategy before Astra started.
 
-## Чем отличаются режимы
+## Modes
 
-| Режим | До Astra | После Astra | Повтор Astra |
+| Mode | Before Astra | After Astra | Extra Astra pass |
 |---|---|---|---:|
-| `astra_only` | Jev не вызывается | Обязательная локальная проверка | Нет |
-| `astra_jev_observe` | Jev не вызывается | Jev оценивает доказательства и записывает вердикт без изменения результата | Нет |
-| `astra_jev_offload` | Jev выбирает разрешённую стратегию или браузерное действие | Обязательная локальная проверка | Нет |
-| `astra_jev_guarded` | Astra выбирает способ решения | Провал проверки или вердикт Jev может вернуть задачу на исправление | Один |
-| `astra_jev_offload_guarded` | Jev выбирает стратегию перед каждым проходом | Локальная проверка отсеивает фактический провал, затем Jev принимает результат или назначает исправление | Один |
+| `astra_only` | No Jev call | Required local verification | No |
+| `astra_jev_observe` | No Jev call | Jev records a verdict without changing the outcome | No |
+| `astra_jev_offload` | Jev selects an allowed strategy or browser action | Required local verification | No |
+| `astra_jev_guarded` | Astra chooses the approach | A failed verifier or Jev verdict can request a correction | One |
+| `astra_jev_offload_guarded` | Jev selects a strategy before each pass | Local verification checks facts, then Jev accepts or requests a correction | One |
 
-Разрешённые ответы Jev задаются каждым заданием. Произвольную команду оболочки или новый инструмент он выбрать не может.
+Each task defines the choices Jev may return. Jev cannot select an arbitrary shell command or introduce a new tool.
 
-## Задания
+## Tasks
 
-В серии использовались три небольших задания:
+1. **Code writing:** implement `slugify` from a fixed specification and pass the tests.
+2. **Bug fixing:** repair `clamp.py` without changing the protected test file.
+3. **Browser form:** extract a value, fill a local page, and verify its `submitted` state.
 
-1. **Написание кода** — реализовать `slugify` по заданным требованиям и пройти тесты.
-2. **Исправление ошибки** — исправить `clamp.py`, не меняя защищённый тестовый файл.
-3. **Браузерная форма** — извлечь значение, заполнить локальную страницу и подтвердить состояние `submitted`.
+Every attempt receives a fresh fixture. Modes cannot reuse another mode's output. The runner rotates mode order between repeats so that one mode does not keep the same cache-warming position.
 
-Каждая попытка получала новую копию исходных файлов. Режимы не использовали результаты друг друга. Порядок режимов сдвигался между повторами, чтобы постоянное первое место не давало одному режиму преимущество от прогрева кэша.
+![Time and cost for all tasks and modes](docs/images/en/task-breakdown.png)
 
-## Разбивка по заданиям
+## The failed attempt
 
-| Задание | Режим | Успешно | Среднее время | Цена успешной задачи |
-|---|---|---:|---:|---:|
-| Написание кода | Astra | 3/3 | 66,7 с | $0,453 |
-| Написание кода | Наблюдение | 3/3 | 87,6 с | $0,580 |
-| Написание кода | Разгрузка | 3/3 | 55,7 с | $0,387 |
-| Написание кода | Проверка | 3/3 | 68,2 с | $0,456 |
-| Написание кода | Разгрузка + проверка | 3/3 | 58,2 с | $0,470 |
-| Исправление ошибки | Astra | 3/3 | 78,1 с | $0,604 |
-| Исправление ошибки | Наблюдение | 3/3 | 78,3 с | $0,572 |
-| Исправление ошибки | Разгрузка | 3/3 | 62,7 с | $0,480 |
-| Исправление ошибки | Проверка | 2/3 | 102,0 с | $1,241 |
-| Исправление ошибки | Разгрузка + проверка | 3/3 | 62,1 с | $0,515 |
-| Браузерная форма | Astra | 3/3 | 22,0 с | $0,197 |
-| Браузерная форма | Наблюдение | 3/3 | 24,4 с | $0,359 |
-| Браузерная форма | Разгрузка | 3/3 | 13,9 с | $0,169 |
-| Браузерная форма | Проверка | 3/3 | 21,7 с | $0,274 |
-| Браузерная форма | Разгрузка + проверка | 3/3 | 12,9 с | $0,086 |
+On the third bug-fix repeat, `astra_jev_guarded` changed both the allowed `clamp.py` and the protected `test_clamp.py`. Local verification rejected the first pass before Jev was called. Astra received `retry_scope`, then changed the protected test again. The attempt stopped after the two-pass limit.
 
-![Сравнение времени и цены браузерной задачи](docs/images/jev-browser-benchmark.png)
+That attempt took 170 seconds and cost $1.161. The scope verifier recorded the failure; the retry did not bring Astra back inside the task boundary.
 
-## Единственный провал
+## Cost calculation
 
-Третий повтор исправления ошибки в режиме `astra_jev_guarded` изменил разрешённый `clamp.py` и защищённый `test_clamp.py`. Локальная проверка отклонила первый проход до обращения к Jev. Astra получила причину `retry_scope`, но повторно изменила тест. Попытка остановилась после двух проходов.
+The estimate includes:
 
-Этот запуск занял 170 секунд и стоил $1,161. Стенд правильно зафиксировал неуспех, однако возврат на исправление не помог Astra соблюсти границы задачи.
-
-## Как считался расход
-
-Расчёт учитывает:
-
-- обычные входные токены Astra;
-- кэшированные и записанные в кэш входные токены Astra;
-- выходные токены Astra;
-- входные токены Jev;
-- все повторные проходы Astra и обращения Jev.
+- uncached Astra input tokens;
+- cached and cache-write Astra input tokens;
+- Astra output tokens;
+- Jev input tokens;
+- every Astra retry and Jev call.
 
 ```text
-общий расход = расход Astra + расход Jev
-цена успешной задачи = расход всех попыток / число успешных задач
+total cost = Astra cost + Jev cost
+cost per success = cost of all attempts / successful tasks
 ```
 
-Использованы цены Astra Standard для короткого контекста и публичная цена Jev, проверенные 21 сентября 2026 года. Это расчётный эквивалент по тарифам API. Списание лимитов подписки Codex может отличаться.
+The calculation uses Astra Standard short-context prices and the public Jev price checked on September 21, 2026. These values are API-price equivalents; Codex subscription usage may be charged differently.
 
-Полный отчёт: [`RESULTS.md`](RESULTS.md). Исходная сводка, записи 45 попыток и контрольные суммы: [`evidence/2026-09-21-five-mode/`](evidence/2026-09-21-five-mode/).
+See the [full English report](RESULTS.md), the [Russian report](RESULTS.ru.md), and the published [`evidence/2026-09-21-five-mode/`](evidence/2026-09-21-five-mode/) directory.
 
-## Как проверить доказательства
+## Verify the evidence
 
-Человеку или агенту достаточно пройти четыре шага:
+1. Compare the summary with [`combined-report.json`](evidence/2026-09-21-five-mode/combined-report.json).
+2. Inspect all 45 attempts in [`attempts.jsonl`](evidence/2026-09-21-five-mode/full-five-mode/attempts.jsonl).
+3. Verify file SHA-256 values against [`manifest.json`](evidence/2026-09-21-five-mode/manifest.json).
+4. Run the unit tests and canary below.
 
-1. Сверить общую таблицу с [`evidence/2026-09-21-five-mode/combined-report.json`](evidence/2026-09-21-five-mode/combined-report.json).
-2. Проверить отдельные попытки в [`full-five-mode/attempts.jsonl`](evidence/2026-09-21-five-mode/full-five-mode/attempts.jsonl).
-3. Сверить SHA-256 файлов по [`manifest.json`](evidence/2026-09-21-five-mode/manifest.json).
-4. Запустить тесты и канарейку по командам ниже.
+Published evidence is redacted. It contains no API keys, local paths, model responses, or raw tool output.
 
-Опубликованные записи обезличены: в них отсутствуют ключи, локальные пути, ответы моделей и необработанный вывод инструментов.
+## Requirements
 
-## Требования
+- Python 3.11 or newer;
+- an installed and authenticated Codex CLI;
+- access to `gpt-6-astra`;
+- a TypeSafe key in `TYPESAFE_API_KEY` for Jev modes;
+- PowerShell 7 for the `.ps1` scripts;
+- Playwright and Chromium for the live browser task.
 
-- Python 3.11 или новее;
-- установленный и авторизованный Codex CLI;
-- доступ к `gpt-6-astra`;
-- ключ TypeSafe в `TYPESAFE_API_KEY` для режимов с Jev;
-- PowerShell 7 для сценариев `.ps1`;
-- Playwright и Chromium для живой браузерной задачи.
+Copy `benchmark-config.example.toml` to `benchmark-config.toml`, then confirm current prices before publishing a new run. Git ignores `benchmark-config.toml`.
 
-Скопируйте `benchmark-config.example.toml` в `benchmark-config.toml` и перед новым опубликованным замером проверьте цены. `benchmark-config.toml` исключён из Git.
-
-Ключ задаётся только в текущем терминале:
+Set the key only for the current terminal session:
 
 ```powershell
-$env:TYPESAFE_API_KEY = "тестовый ключ"
+$env:TYPESAFE_API_KEY = "test key"
 ```
 
-## Локальная проверка без расхода API
+## Local checks without API spend
 
 ```powershell
 python -m unittest discover -s tests -v
 pwsh -NoProfile -File .\scripts\run-benchmark.ps1 -Mode canary
 ```
 
-Канарейка использует поддельные ответы Astra и Jev и создаёт 15 записей: три задания в пяти режимах. Она проверяет копирование заданий, обязательные проверки, повторные проходы и построение отчёта. Канарейка не измеряет экономию.
+The canary uses fake Astra and Jev responses to create 15 records: three tasks in five modes. It checks fixture copying, mandatory verification, retry handling, and report generation. It does not measure savings.
 
-## Предварительная проверка живого запуска
+## Live-run preflight
 
 ```powershell
 python .\run_benchmark.py preflight `
@@ -148,9 +125,9 @@ python .\run_benchmark.py preflight `
   --mode astra_jev_offload_guarded
 ```
 
-Команда проверяет Python, Codex, задания, Playwright и наличие ключа. Значение ключа в вывод не попадает.
+Preflight checks Python, Codex, task fixtures, Playwright, and the Jev key without printing the key value.
 
-## Полный живой запуск
+## Full live run
 
 ```powershell
 pwsh -NoProfile -File .\scripts\run-benchmark.ps1 `
@@ -158,9 +135,9 @@ pwsh -NoProfile -File .\scripts\run-benchmark.ps1 `
   -Config .\benchmark-config.toml
 ```
 
-Результаты сохраняются в `results/`, который исключён из Git. `attempts.jsonl` содержит запись каждой попытки, `report.json` — сводку.
+The runner writes `attempts.jsonl` and `report.json` under the ignored `results/` directory.
 
-Если Codex завершился до ответа модели, стенд останавливается с кодом `3`. После восстановления сервиса продолжите ту же матрицу:
+If Codex exits before returning a model response, the benchmark stops with exit code `3`. After service recovery, resume the same matrix:
 
 ```powershell
 python .\run_benchmark.py run `
@@ -171,28 +148,30 @@ python .\run_benchmark.py run `
   --mode astra_jev_offload_guarded `
   --repeats 3 `
   --config .\benchmark-config.toml `
-  --output .\results\имя-прерванного-прогона `
+  --output .\results\interrupted-run-name `
   --resume
 ```
 
-`--resume` повторяет только отсутствующие сочетания и инфраструктурные отказы. Завершённые попытки и обычные провалы проверки сохраняются.
+`--resume` reruns only missing task-mode pairs and infrastructure failures. Completed attempts and ordinary verifier failures remain unchanged.
 
-## Ограничения
+## Limits
 
-- На каждое сочетание задания и режима приходится три повтора.
-- Задания синтетические и короче реальной разработки.
-- Браузерная задача использует локальную страницу без сети и учётных данных.
-- Первый полный запуск попал во временное окно недоступности Astra. После исправления стенд продолжил только отсутствующие сочетания; итоговый набор содержит 45 уникальных попыток без инфраструктурных отказов.
-- Результаты относятся к указанной модели, ценам, заданиям и дате запуска. Новый набор задач или изменение тарифов требует отдельного замера.
+- Each task-mode pair has three repeats.
+- The tasks are synthetic and shorter than real development work.
+- The browser task uses a local page without network access or credentials.
+- The first full run crossed a temporary Astra outage. The runner resumed only missing pairs after recovery; the published set contains 45 unique attempts and no infrastructure failures.
+- Results apply to the listed model, prices, tasks, and run date. Other workloads require a separate measurement.
 
-## Структура репозитория
+## Repository layout
 
 ```text
-jev_astra_bench/   исполнитель и расчёт метрик
-tasks/             три исходных задания
-tests/             модульные тесты и канарейка
-scripts/           запуск, сравнение и экспорт доказательств
-evidence/          обезличенный опубликованный прогон
-docs/images/       графики результатов
-RESULTS.md         полный отчёт
+jev_astra_bench/   runner and metric calculation
+tasks/             three source fixtures
+tests/             unit tests and canary
+scripts/           run, compare, and evidence-export scripts
+evidence/          redacted published run
+docs/images/en/    English charts
+docs/images/ru/    Russian charts
+RESULTS.md         full English report
+RESULTS.ru.md      full Russian report
 ```

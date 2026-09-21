@@ -1,70 +1,74 @@
-# Живой замер Astra и Astra + Jev
+# Live Astra and Astra + Jev benchmark
 
-Дата: 21 сентября 2026 года.
+**English** | [Русский](RESULTS.ru.md)
 
-Стенд выполнил 45 независимых попыток: три задания, пять режимов и три повтора. Во всех режимах работала `gpt-6-astra` с уровнем рассуждения `xhigh`. Luna, Terra и Sol не вызывались.
+Run date: September 21, 2026.
 
-Обезличенные записи, отчёт и контрольные суммы опубликованы в [`evidence/2026-09-21-five-mode/`](./evidence/2026-09-21-five-mode/).
+The benchmark completed 45 independent attempts: three tasks, five modes, and three repeats. Every mode used `gpt-6-astra` at `xhigh` reasoning. Luna, Terra, and Sol were not called.
 
-## Общий результат
+Redacted attempt records, aggregate reports, and checksums are published in [`evidence/2026-09-21-five-mode/`](./evidence/2026-09-21-five-mode/).
 
-| Режим | Успешно | Среднее время | Общий расход | Цена успешного результата |
+## Aggregate result
+
+| Mode | Passed | Mean time | Total cost | Cost per success |
 |---|---:|---:|---:|---:|
-| Astra | 9/9 | 55,6 с | $3,764 | $0,418 |
-| Наблюдение Jev | 9/9 | 63,4 с | $4,534 | $0,504 |
-| Разгрузка Jev | 9/9 | 44,1 с | $3,107 | $0,345 |
-| Проверка с возвратом | 8/9 | 64,0 с | $4,672 | $0,584 |
-| Разгрузка + проверка | 9/9 | 44,4 с | $3,214 | $0,357 |
+| Astra | 9/9 | 55.6 s | $3.764 | $0.418 |
+| Jev Observe | 9/9 | 63.4 s | $4.534 | $0.504 |
+| Jev Offload | 9/9 | 44.1 s | $3.107 | $0.345 |
+| Guarded retry | 8/9 | 64.0 s | $4.672 | $0.584 |
+| Offload + guard | 9/9 | 44.4 s | $3.214 | $0.357 |
 
-Относительно Astra режим разгрузки сократил среднее время на 20,7%, входные токены Astra на 15,1% и цену успешного результата на 17,5%. Совмещённый режим сократил время на 20,1%, входные токены Astra на 13,2% и цену успешного результата на 14,6%.
+Compared with Astra alone, Jev Offload reduced mean duration by 20.7%, Astra input tokens by 15.1%, and cost per success by 17.5%. Offload + guard reduced the same metrics by 20.1%, 13.2%, and 14.6%.
 
-Наблюдение без разгрузки увеличило цену успешного результата на 20,5%. Проверка с возвратом увеличила её на 39,6% и получила 8 успешных результатов из 9. Для текущего набора лучшим основным режимом стала разгрузка. Совмещённый режим сохранил близкий расход и добавил проверку результата.
+Observe increased cost per success by 20.5%. Guarded retry increased it by 39.6% and passed 8 of 9 attempts. Jev Offload was the lowest-cost primary mode for this task set. Offload + guard stayed close while adding a final Jev decision.
 
-Суммарный расчётный расход серии составил $19,292.
+The estimated cost of the complete series was $19.292.
 
-## Единственный провал
+## Failed attempt
 
-В третьем повторе исправления ошибки режим проверки с возвратом изменил разрешённый `clamp.py` и запрещённый `test_clamp.py`. Локальная проверка отклонила первый проход до обращения к Jev. Astra получила причину `retry_scope`, но во втором проходе снова изменила тест. Попытка завершилась после установленного предела в два прохода.
+On the third bug-fix repeat, Guarded retry changed both the allowed `clamp.py` and the protected `test_clamp.py`. Local verification rejected the first pass before Jev was called. Astra received `retry_scope`, then changed the protected test again on the second pass. The attempt ended at the two-pass limit.
 
-Жёсткая проверка области изменений поймала нарушение, но сам режим не исправил результат: он потратил $1,161 и 170 секунд, после чего вернул неуспех.
+The scope verifier caught the violation, but the second pass did not correct it. The failed attempt cost $1.161 and took 170 seconds.
 
-## Разбивка по заданиям
+## Results by task
 
-| Задание | Режим | Успешно | Среднее время | Цена успешного результата |
+| Task | Mode | Passed | Mean time | Cost per success |
 |---|---|---:|---:|---:|
-| Написание кода | Astra | 3/3 | 66,7 с | $0,453 |
-| Написание кода | Наблюдение | 3/3 | 87,6 с | $0,580 |
-| Написание кода | Разгрузка | 3/3 | 55,7 с | $0,387 |
-| Написание кода | Проверка | 3/3 | 68,2 с | $0,456 |
-| Написание кода | Разгрузка + проверка | 3/3 | 58,2 с | $0,470 |
-| Исправление ошибки | Astra | 3/3 | 78,1 с | $0,604 |
-| Исправление ошибки | Наблюдение | 3/3 | 78,3 с | $0,572 |
-| Исправление ошибки | Разгрузка | 3/3 | 62,7 с | $0,480 |
-| Исправление ошибки | Проверка | 2/3 | 102,0 с | $1,241 |
-| Исправление ошибки | Разгрузка + проверка | 3/3 | 62,1 с | $0,515 |
-| Браузерная форма | Astra | 3/3 | 22,0 с | $0,197 |
-| Браузерная форма | Наблюдение | 3/3 | 24,4 с | $0,359 |
-| Браузерная форма | Разгрузка | 3/3 | 13,9 с | $0,169 |
-| Браузерная форма | Проверка | 3/3 | 21,7 с | $0,274 |
-| Браузерная форма | Разгрузка + проверка | 3/3 | 12,9 с | $0,086 |
+| Code writing | Astra | 3/3 | 66.7 s | $0.453 |
+| Code writing | Observe | 3/3 | 87.6 s | $0.580 |
+| Code writing | Offload | 3/3 | 55.7 s | $0.387 |
+| Code writing | Guarded | 3/3 | 68.2 s | $0.456 |
+| Code writing | Offload + guard | 3/3 | 58.2 s | $0.470 |
+| Bug fixing | Astra | 3/3 | 78.1 s | $0.604 |
+| Bug fixing | Observe | 3/3 | 78.3 s | $0.572 |
+| Bug fixing | Offload | 3/3 | 62.7 s | $0.480 |
+| Bug fixing | Guarded | 2/3 | 102.0 s | $1.241 |
+| Bug fixing | Offload + guard | 3/3 | 62.1 s | $0.515 |
+| Browser form | Astra | 3/3 | 22.0 s | $0.197 |
+| Browser form | Observe | 3/3 | 24.4 s | $0.359 |
+| Browser form | Offload | 3/3 | 13.9 s | $0.169 |
+| Browser form | Guarded | 3/3 | 21.7 s | $0.274 |
+| Browser form | Offload + guard | 3/3 | 12.9 s | $0.086 |
 
-## Как считался расход
+## Cost calculation
 
-Расчёт учитывает обычные, кэшированные и записанные в кэш входные токены Astra, выходные токены Astra и входные токены Jev. Использованы цены Astra Standard для короткого контекста и Jev, проверенные в день запуска:
+The estimate includes uncached, cached, and cache-write Astra input tokens; Astra output tokens; and Jev input tokens. Prices were checked on the run date:
 
 - Astra: <https://developers.openai.com/api/docs/pricing>;
 - Jev: <https://typesafe.ai/blog/introducing-system-one-models-and-jev>.
 
-Фактическое списание лимитов подписки Codex может отличаться от эквивалента по тарифу API.
+Codex subscription usage may differ from the API-price equivalent.
 
-## Сбой инфраструктуры и продолжение
+## Infrastructure outage and resume
 
-Первый полный запуск попал во временное окно недоступности Astra: после семи завершённых попыток 38 процессов подряд вернули `exit_code=1` без ответа модели. Эти записи не считались провалами заданий. Стенд получил защиту от такого искажения: он останавливается на первом инфраструктурном отказе, архивирует прерванный журнал и с `--resume` продолжает только отсутствующие пары. Итоговый набор содержит 45 уникальных пар и не содержит инфраструктурных отказов.
+The first full run crossed a temporary Astra outage. After seven completed attempts, 38 consecutive Codex processes returned `exit_code=1` without a model response. Those records were classified as infrastructure failures rather than task failures.
 
-## Ограничения
+The runner now stops on the first infrastructure failure, archives the interrupted journal, and uses `--resume` to run only missing pairs. The published dataset contains 45 unique task-mode-repeat combinations and no infrastructure failures.
 
-- В каждом сочетании задания и режима только три повтора.
-- Задания синтетические и короче реальной разработки.
-- Матрица изолирует Astra и Jev: пользовательские дополнения, перехватчики, приложения, память и параллельные агенты отключены.
-- Браузерная задача использует локальную страницу без сети и учётных данных.
-- Продолжение после окна недоступности разделило прогон на два временных отрезка. Ротация порядка сохранилась, но нагрузка сервиса могла различаться.
+## Limits
+
+- Each task-mode pair has three repeats.
+- The tasks are synthetic and shorter than real development work.
+- The matrix isolates Astra and Jev by disabling user plugins, hooks, apps, memory, and parallel agents.
+- The browser task uses a local page without network access or credentials.
+- Resuming after the outage split the run across two time windows. Mode rotation was preserved, but service load may have differed.
