@@ -4,7 +4,11 @@
 
 A reproducible comparison of Astra alone and Astra assisted by Jev on code writing, bug fixing, and a local browser-form task.
 
-The benchmark isolates one working model: `gpt-6-astra` at `xhigh` reasoning. User plugins, hooks, apps, memory, and parallel agents are disabled. Jev does not route work to Luna, Terra, Sol, or another language model. It selects bounded decisions from task-specific allow lists; Astra still performs the work.
+A separate [React website pilot](REACT-PILOT.md) completed 20 attempts with `gpt-6-astra` and `gpt-6.1-sol`, baseline and Jev offload, five runs per combination. The [original results](docs/REACT-PILOT-RESULTS-2026-10-23.md) and [three owner-requested reruns](docs/REACT-PILOT-RERUN-RESULTS-2026-10-23.md) are reported separately. After the reruns, successful attempts were 4/5, 4/5, 4/5 and 5/5 respectively; two timeouts and one mobile-overflow failure remain. Functional checks do not rate visual quality. The published September results below remain unchanged.
+
+[Machine-readable React results and rerun provenance](evidence/2026-10-23-react-pilot/README.md).
+
+The published September benchmark isolates one working model: `gpt-6-astra` at `xhigh` reasoning. User plugins, hooks, apps, memory, and parallel agents are disabled. Jev does not route work to Luna, Terra, Sol, or another language model. It selects bounded decisions from task-specific allow lists; Astra still performs the work.
 
 ## Result
 

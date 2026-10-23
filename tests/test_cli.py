@@ -34,7 +34,7 @@ class CliTests(unittest.TestCase):
 
     def test_astra_only_preflight_does_not_require_jev_key(self) -> None:
         with patch.dict(os.environ, {"TYPESAFE_API_KEY": ""}, clear=False):
-            code = main(["preflight", "--mode", "astra_only"])
+            code = main(["preflight", "--mode", "astra_only", "--task-id", "code-write-001"])
         self.assertEqual(code, 0)
 
     def test_simulated_five_mode_run_writes_records_and_report(self) -> None:

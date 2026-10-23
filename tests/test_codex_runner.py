@@ -45,7 +45,7 @@ class CodexRunnerTests(unittest.TestCase):
         self.assertEqual(result.parsed.final_text, "ok")
         self.assertEqual(result.parsed.input_tokens, 3)
         self.assertEqual(result.parsed.output_tokens, 2)
-        self.assertIn("apply_patch", result.command[-1])
+        self.assertEqual(result.command[-1], "-")
 
     def test_runner_tells_sandboxed_shells_to_enter_the_exact_workspace(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -55,7 +55,7 @@ class CodexRunnerTests(unittest.TestCase):
             fake = root / "echo_prompt.py"
             fake.write_text(
                 "import json, sys\n"
-                "print(json.dumps({'type':'item.completed','item':{'type':'agent_message','text':sys.argv[-1]}}))\n",
+                "print(json.dumps({'type':'item.completed','item':{'type':'agent_message','text':sys.stdin.read()}}))\n",
                 encoding="utf-8",
             )
             result = run_codex(
@@ -68,6 +68,16 @@ class CodexRunnerTests(unittest.TestCase):
         self.assertIn(str(workspace.resolve()), prompt)
         self.assertIn("Set-Location -LiteralPath", prompt)
         self.assertIn("absolute path", prompt)
+
+    def test_multiline_prompt_is_literal_stdin_not_a_shell_argument(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fake = root / 'stdin.py'
+            fake.write_text("import json,sys\nprint(json.dumps({'type':'item.completed','item':{'type':'agent_message','text':sys.stdin.read()}}))\n")
+            prompt = 'first line\nsecond "quoted" line\n$token `literal` & keep this'
+            result = run_codex(prompt, root, CodexConfig(executable=sys.executable, executable_prefix=(str(fake),)))
+            self.assertTrue(result.parsed.final_text.startswith(prompt))
+            self.assertNotIn(prompt, result.command)
 
 
 if __name__ == "__main__":

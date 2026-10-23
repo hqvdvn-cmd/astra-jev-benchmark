@@ -5,3 +5,7 @@ benchmark-config.toml
 results/
 .jev-astra-workspaces/
 benchmarks/jev-astra/results/
+.env
+node_modules/
+dist/
+tasks/react-site-001/starter/public/orbit-loop.mp4

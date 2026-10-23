@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 import subprocess
 import time
 from dataclasses import dataclass
@@ -18,6 +19,8 @@ class CodexConfig:
     executable_prefix: tuple[str, ...] = ()
     sandbox: str = "workspace-write"
     approval: str = "never"
+    isolated: bool = False
+    events_path: Path | None = None
 
 
 @dataclass(slots=True, frozen=True)
@@ -34,6 +37,8 @@ def build_command(prompt: str, workspace: Path, config: CodexConfig) -> list[str
         config.executable,
         *config.executable_prefix,
         "exec",
+        *(["--ignore-user-config", "-c", "project_doc_max_bytes=0", "-c", 'web_search="disabled"',
+           *(['-c', 'windows.sandbox="unelevated"'] if os.name == 'nt' else [])] if config.isolated else []),
         "--json",
         "--ephemeral",
         "--disable",
@@ -65,6 +70,18 @@ def build_command(prompt: str, workspace: Path, config: CodexConfig) -> list[str
     ]
 
 
+def model_environment(isolated: bool) -> dict[str, str]:
+    env = os.environ.copy()
+    if isolated:
+        for key in list(env):
+            if re.search(r"API[_-]?KEY|TOKEN|SECRET|PASSWORD|CREDENTIAL", key, re.I):
+                env.pop(key, None)
+        for key in ('CODEX_THREAD_ID', 'CODEX_SESSION_ID', 'CODEX_TOOL_CALL_ID', 'CODEX_APP_TOOLS_PIPE_PATH',
+                    'CODEX_PERMISSION_PROFILE', 'CODEX_SHELL', 'CODEX_CI', 'CODEX_INTERNAL_ORIGINATOR_OVERRIDE'):
+            env.pop(key, None)
+    return env
+
+
 def run_codex(prompt: str, workspace: Path, config: CodexConfig) -> CodexAttempt:
     workspace_root = workspace.resolve()
     powershell_root = str(workspace_root).replace("'", "''")
@@ -78,14 +95,16 @@ def run_codex(prompt: str, workspace: Path, config: CodexConfig) -> CodexAttempt
         "and run the declared tests. Do not return a suggested patch without applying it. "
         "Shell write commands may be denied by the Windows sandbox."
     )
-    command = build_command(platform_prompt, workspace, config)
-    process_env = os.environ.copy()
+    # Pass the complete multiline prompt over stdin. Windows .cmd wrappers can truncate
+    # multiline command arguments and strip TOML quoting before Codex receives them.
+    command = build_command("-", workspace, config)
+    process_env = model_environment(config.isolated)
     started = time.monotonic()
     process = subprocess.Popen(
         command,
         cwd=workspace,
         env=process_env,
-        stdin=subprocess.DEVNULL,
+        stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
@@ -94,11 +113,18 @@ def run_codex(prompt: str, workspace: Path, config: CodexConfig) -> CodexAttempt
     )
     timed_out = False
     try:
-        stdout, _stderr = process.communicate(timeout=config.timeout_s)
-    except subprocess.TimeoutExpired as error:
+        stdout, _stderr = process.communicate(input=platform_prompt, timeout=config.timeout_s)
+    except subprocess.TimeoutExpired:
         timed_out = True
-        process.kill()
+        if os.name == 'nt':
+            subprocess.run(['taskkill', '/PID', str(process.pid), '/T', '/F'], capture_output=True, timeout=15)
+        else:
+            process.kill()
         stdout, _stderr = process.communicate()
-        stdout = (stdout or "") + "\n" + (error.output or "")
+        # communicate() after kill drains the complete buffered output; do not double-count it.
+    if config.events_path is not None:
+        config.events_path.parent.mkdir(parents=True, exist_ok=True)
+        config.events_path.write_text(stdout or "", encoding="utf-8")
+        config.events_path.with_suffix(".stderr.txt").write_text(_stderr or "", encoding="utf-8")
     parsed = parse_codex_events((stdout or "").splitlines())
     return CodexAttempt(parsed, time.monotonic() - started, process.returncode, timed_out, tuple(command))
