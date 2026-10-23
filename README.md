@@ -2,11 +2,38 @@
 
 **English** | [Русский](README.ru.md)
 
-A reproducible comparison of Astra alone and Astra assisted by Jev on code writing, bug fixing, and a local browser-form task.
+A reproducible comparison of GPT models with and without bounded Jev decisions. The completed studies cover a React website, code writing, bug fixing, and a local browser-form task.
 
-The benchmark isolates one working model: `gpt-6-astra` at `xhigh` reasoning. User plugins, hooks, apps, memory, and parallel agents are disabled. Jev does not route work to Luna, Terra, Sol, or another language model. It selects bounded decisions from task-specific allow lists; Astra still performs the work.
+**React harness and tests:** [`react-sol-pilot` branch](https://github.com/hqvdvn-cmd/astra-jev-benchmark/tree/react-sol-pilot). It contains the website task, isolated runner, browser checks, tests and curated evidence. The results below cover the completed solo-model pilot; the ongoing planner/builder study is excluded.
 
-## Result
+## Completed React website benchmark — October 2026
+
+`gpt-6-astra` and `gpt-6.1-sol` each built the same ORBIT React website, with and without Jev offload, five independent runs per combination: **20 cells**. All runs used the same prompt, clean starter, pinned dependencies, local six-second video, `xhigh` reasoning and a 900-second GPT budget. Jev selected a bounded strategy; GPT implemented the site. External build and browser checks tested 18 conditions, including filters, pricing, forms, keyboard focus, video controls and mobile behavior.
+
+| Model / mode | Original series | After 3 requested reruns | Time limits after reruns | Check failures after reruns |
+|---|---:|---:|---:|---:|
+| Astra baseline | 4/5 | 4/5 | 1 | 0 |
+| Astra + Jev offload | 3/5 | 4/5 | 0 | 1 |
+| Sol 6.1 baseline | 4/5 | 4/5 | 1 | 0 |
+| Sol 6.1 + Jev offload | 5/5 | 5/5 | 0 | 0 |
+
+The original series recorded **16/20 successes**. Three owner-requested reruns produced a separate revision with **17/20 successes**; the other 17 cells stayed unchanged. Both revisions remain available. The revised results retain two timeouts and one mobile-overflow failure. A timed-out Sol baseline site passed all 18 functional checks; its attempt still failed the time budget. Five earlier quota/authentication interruptions are archived separately from the 20 scored cells.
+
+![React pilot outcomes: original series and requested rerun revision](docs/images/en/react-pilot-outcomes.png)
+
+The timing plot shows each revised attempt, including failed attempts. White vertical lines mark medians where all five timings are known. One Sol + Jev timing was lost when the caller stopped; it remains unknown, so that group has no median. Actual CLI cost is unavailable.
+
+![React pilot generation times, with one explicitly unknown timing](docs/images/en/react-pilot-generation.png)
+
+These functional checks do not score visual quality. Five repeats on one prompt do not establish general model superiority or a reliable Jev benefit. The original and rerun results are not pooled into a larger independent sample.
+
+[Evidence and rerun provenance](evidence/2026-10-23-react-pilot/README.md) · [Original series](docs/REACT-PILOT-RESULTS-2026-10-23.md) · [Requested reruns](docs/REACT-PILOT-RERUN-RESULTS-2026-10-23.md) · [Chart values](docs/images/react-pilot-chart-data.json)
+
+Rebuild these charts with Pillow installed: `python scripts/render-react-pilot.py`.
+
+## September 2026 benchmark — three tasks, five modes
+
+This earlier benchmark isolates one working model: `gpt-6-astra` at `xhigh` reasoning. User plugins, hooks, apps, memory, and parallel agents are disabled. Jev does not route work to Luna, Terra, Sol, or another language model. It selects bounded decisions from task-specific allow lists; Astra still performs the work.
 
 The published run contains 45 attempts: three tasks, five modes, and three repeats for every task-mode pair.
 

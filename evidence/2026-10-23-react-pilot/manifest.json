@@ -1,0 +1,135 @@
+{
+  "prompt_sha256": "1694997a48025a27388c432c7b68010250c22e778e5cc7a8a4edf0ca0b03ce9a",
+  "starter": {
+    "index.html": "f042e33d07338a78852a1a6da97e7ab0b08f2f0b365481353ca3862749e6c632",
+    "package-lock.json": "a30c2e4883b27ab31fea70022a48a27f3335774056bf216d6d9bf4cb4feb50bf",
+    "package.json": "af21b21e81596bc2251df501d3bd1f866d7cac71d65e92e15f632523bc3fe93d",
+    "public/orbit-loop.mp4": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "references/motion-design.md": "883ba917d8032458a5d2eda91a2dde4c59ca9159fdd1313699be948417374627",
+    "src/App.jsx": "7b7aa0c992f2ade1672156efc7594b5759b44507d6237b4305c348f6e9f63ded",
+    "src/main.jsx": "3dec8288c361b8aa096803a15dfd3f3c553398d73ad4c09bc8e63f79d930dbec",
+    "src/style.css": "6d5d98dbd8e7e67e662af93aae9e0dbdd769979e3127688c8296795bbe9422c9"
+  },
+  "dependencies_sha256": "e4e6be6e65ef96616f9d2dc66ed0f283b47759295321de877d089213aee6ced4",
+  "treatment_sources": {
+    "offload.py": "78bb74a09cd58919e92c35cae97e666d30b38d9855c2c8d042fa08e6abb033b9",
+    "jev_client.py": "6d2962fc91527e04caeb74b203e33fa37a3a6a57e59154fe2c5559589c10363c",
+    "redaction.py": "d2c8fa76e9493a9b2f1b3c5cf036e4e87bfb4a33d749f4545f152f598547f939",
+    "codex_events.py": "654a6d07f4995b060e63b2ba12c4bef7a9f101b41e7cdae82e883ee72c467fe6"
+  },
+  "browser_runtime": {
+    "playwright": "1.62.1",
+    "browser": "155.0.8059.85",
+    "node": "v24.12.0"
+  },
+  "runner_sha256": "78ca4535422bce714fa0ff33860ed677db433db3586fe161fde140f588bd26dd",
+  "codex_runner_sha256": "d5ce62a6a379b389fa3b688a70cf20631ccfef587a82dee22a1bf3f8c00bb17e",
+  "verifier_sha256": "038dc1d0c8cf8c5742ea7efda2809ad4c721341f7b16455adae569544aae1956",
+  "matrix": [
+    [
+      1,
+      "gpt-6-astra",
+      "baseline"
+    ],
+    [
+      1,
+      "gpt-6-astra",
+      "jev_offload"
+    ],
+    [
+      1,
+      "gpt-6.1-sol",
+      "baseline"
+    ],
+    [
+      1,
+      "gpt-6.1-sol",
+      "jev_offload"
+    ],
+    [
+      2,
+      "gpt-6-astra",
+      "jev_offload"
+    ],
+    [
+      2,
+      "gpt-6.1-sol",
+      "baseline"
+    ],
+    [
+      2,
+      "gpt-6.1-sol",
+      "jev_offload"
+    ],
+    [
+      2,
+      "gpt-6-astra",
+      "baseline"
+    ],
+    [
+      3,
+      "gpt-6.1-sol",
+      "baseline"
+    ],
+    [
+      3,
+      "gpt-6.1-sol",
+      "jev_offload"
+    ],
+    [
+      3,
+      "gpt-6-astra",
+      "baseline"
+    ],
+    [
+      3,
+      "gpt-6-astra",
+      "jev_offload"
+    ],
+    [
+      4,
+      "gpt-6.1-sol",
+      "jev_offload"
+    ],
+    [
+      4,
+      "gpt-6-astra",
+      "baseline"
+    ],
+    [
+      4,
+      "gpt-6-astra",
+      "jev_offload"
+    ],
+    [
+      4,
+      "gpt-6.1-sol",
+      "baseline"
+    ],
+    [
+      5,
+      "gpt-6-astra",
+      "baseline"
+    ],
+    [
+      5,
+      "gpt-6-astra",
+      "jev_offload"
+    ],
+    [
+      5,
+      "gpt-6.1-sol",
+      "baseline"
+    ],
+    [
+      5,
+      "gpt-6.1-sol",
+      "jev_offload"
+    ]
+  ],
+  "reasoning_effort": "xhigh",
+  "timeout_s": 900,
+  "simulate": false,
+  "browser_channel": "chrome",
+  "external_network": "blocked_in_browser"
+}

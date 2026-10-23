@@ -1,0 +1,13 @@
+{
+  "policy": "One owner-requested clean rerun per selected cell. Retain new outcome regardless of success; preserve prior evidence. Same900-second budget.",
+  "replacement_cells": [
+    "gpt-6-astra-baseline-r1",
+    "gpt-6-astra-jev_offload-r2",
+    "gpt-6.1-sol-baseline-r5"
+  ],
+  "retained_cells": 17,
+  "original_results": "original-summary.json",
+  "revised_results": "rerun-summary.json",
+  "classification_correction": "Original Astra offload r2 had403 and disconnections before its time budget expired. The other two selected timeouts had no explicit quota error.",
+  "gallery_qa": "Three reported incomplete sites were archived service interruptions with duplicate headings. Their current replacements passed live browser checks. Astra baseline r1 really remained the starter after both timeouts."
+}

@@ -1,0 +1,351 @@
+{
+  "original": [
+    {
+      "model": "gpt-6-astra",
+      "mode": "baseline",
+      "label": "Astra",
+      "attempts": 5,
+      "success": 4,
+      "timeout": 1,
+      "failure": 0,
+      "median_model_duration_s": 830.9370000000345,
+      "unknown_timing": 0,
+      "samples": [
+        {
+          "attempt_id": "gpt-6-astra-baseline-r1",
+          "repeat": 1,
+          "model_duration_s": 900.359999999986,
+          "outcome": "timeout"
+        },
+        {
+          "attempt_id": "gpt-6-astra-baseline-r2",
+          "repeat": 2,
+          "model_duration_s": 830.9370000000345,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6-astra-baseline-r3",
+          "repeat": 3,
+          "model_duration_s": 879.234999999986,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6-astra-baseline-r4",
+          "repeat": 4,
+          "model_duration_s": 743.280999999959,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6-astra-baseline-r5",
+          "repeat": 5,
+          "model_duration_s": 712.0160000000615,
+          "outcome": "success"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "mode": "jev_offload",
+      "label": "Astra + Jev",
+      "attempts": 5,
+      "success": 3,
+      "timeout": 1,
+      "failure": 1,
+      "median_model_duration_s": 840.4380000000237,
+      "unknown_timing": 0,
+      "samples": [
+        {
+          "attempt_id": "gpt-6-astra-jev_offload-r1",
+          "repeat": 1,
+          "model_duration_s": 840.4380000000237,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6-astra-jev_offload-r2",
+          "repeat": 2,
+          "model_duration_s": 900.3279999999795,
+          "outcome": "timeout"
+        },
+        {
+          "attempt_id": "gpt-6-astra-jev_offload-r3",
+          "repeat": 3,
+          "model_duration_s": 871.609000000055,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6-astra-jev_offload-r4",
+          "repeat": 4,
+          "model_duration_s": 833.8439999999246,
+          "outcome": "failure"
+        },
+        {
+          "attempt_id": "gpt-6-astra-jev_offload-r5",
+          "repeat": 5,
+          "model_duration_s": 801.2970000000205,
+          "outcome": "success"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "mode": "baseline",
+      "label": "Sol 6.1",
+      "attempts": 5,
+      "success": 4,
+      "timeout": 1,
+      "failure": 0,
+      "median_model_duration_s": 801.984000000055,
+      "unknown_timing": 0,
+      "samples": [
+        {
+          "attempt_id": "gpt-6.1-sol-baseline-r1",
+          "repeat": 1,
+          "model_duration_s": 877.8429999999935,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-baseline-r2",
+          "repeat": 2,
+          "model_duration_s": 570.8280000000959,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-baseline-r3",
+          "repeat": 3,
+          "model_duration_s": 801.984000000055,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-baseline-r4",
+          "repeat": 4,
+          "model_duration_s": 612.280999999959,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-baseline-r5",
+          "repeat": 5,
+          "model_duration_s": 900.265000000014,
+          "outcome": "timeout"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "mode": "jev_offload",
+      "label": "Sol 6.1 + Jev",
+      "attempts": 5,
+      "success": 5,
+      "timeout": 0,
+      "failure": 0,
+      "median_model_duration_s": null,
+      "unknown_timing": 1,
+      "samples": [
+        {
+          "attempt_id": "gpt-6.1-sol-jev_offload-r1",
+          "repeat": 1,
+          "model_duration_s": 817.045999999973,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-jev_offload-r2",
+          "repeat": 2,
+          "model_duration_s": null,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-jev_offload-r3",
+          "repeat": 3,
+          "model_duration_s": 776.0,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-jev_offload-r4",
+          "repeat": 4,
+          "model_duration_s": 736.515000000014,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-jev_offload-r5",
+          "repeat": 5,
+          "model_duration_s": 822.9220000000205,
+          "outcome": "success"
+        }
+      ]
+    }
+  ],
+  "revised": [
+    {
+      "model": "gpt-6-astra",
+      "mode": "baseline",
+      "label": "Astra",
+      "attempts": 5,
+      "success": 4,
+      "timeout": 1,
+      "failure": 0,
+      "median_model_duration_s": 830.9370000000345,
+      "unknown_timing": 0,
+      "samples": [
+        {
+          "attempt_id": "gpt-6-astra-baseline-r1",
+          "repeat": 1,
+          "model_duration_s": 900.234999999986,
+          "outcome": "timeout"
+        },
+        {
+          "attempt_id": "gpt-6-astra-baseline-r2",
+          "repeat": 2,
+          "model_duration_s": 830.9370000000345,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6-astra-baseline-r3",
+          "repeat": 3,
+          "model_duration_s": 879.234999999986,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6-astra-baseline-r4",
+          "repeat": 4,
+          "model_duration_s": 743.280999999959,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6-astra-baseline-r5",
+          "repeat": 5,
+          "model_duration_s": 712.0160000000615,
+          "outcome": "success"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "mode": "jev_offload",
+      "label": "Astra + Jev",
+      "attempts": 5,
+      "success": 4,
+      "timeout": 0,
+      "failure": 1,
+      "median_model_duration_s": 833.8439999999246,
+      "unknown_timing": 0,
+      "samples": [
+        {
+          "attempt_id": "gpt-6-astra-jev_offload-r1",
+          "repeat": 1,
+          "model_duration_s": 840.4380000000237,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6-astra-jev_offload-r2",
+          "repeat": 2,
+          "model_duration_s": 763.7970000000205,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6-astra-jev_offload-r3",
+          "repeat": 3,
+          "model_duration_s": 871.609000000055,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6-astra-jev_offload-r4",
+          "repeat": 4,
+          "model_duration_s": 833.8439999999246,
+          "outcome": "failure"
+        },
+        {
+          "attempt_id": "gpt-6-astra-jev_offload-r5",
+          "repeat": 5,
+          "model_duration_s": 801.2970000000205,
+          "outcome": "success"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "mode": "baseline",
+      "label": "Sol 6.1",
+      "attempts": 5,
+      "success": 4,
+      "timeout": 1,
+      "failure": 0,
+      "median_model_duration_s": 801.984000000055,
+      "unknown_timing": 0,
+      "samples": [
+        {
+          "attempt_id": "gpt-6.1-sol-baseline-r1",
+          "repeat": 1,
+          "model_duration_s": 877.8429999999935,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-baseline-r2",
+          "repeat": 2,
+          "model_duration_s": 570.8280000000959,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-baseline-r3",
+          "repeat": 3,
+          "model_duration_s": 801.984000000055,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-baseline-r4",
+          "repeat": 4,
+          "model_duration_s": 612.280999999959,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-baseline-r5",
+          "repeat": 5,
+          "model_duration_s": 900.25,
+          "outcome": "timeout"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "mode": "jev_offload",
+      "label": "Sol 6.1 + Jev",
+      "attempts": 5,
+      "success": 5,
+      "timeout": 0,
+      "failure": 0,
+      "median_model_duration_s": null,
+      "unknown_timing": 1,
+      "samples": [
+        {
+          "attempt_id": "gpt-6.1-sol-jev_offload-r1",
+          "repeat": 1,
+          "model_duration_s": 817.045999999973,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-jev_offload-r2",
+          "repeat": 2,
+          "model_duration_s": null,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-jev_offload-r3",
+          "repeat": 3,
+          "model_duration_s": 776.0,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-jev_offload-r4",
+          "repeat": 4,
+          "model_duration_s": 736.515000000014,
+          "outcome": "success"
+        },
+        {
+          "attempt_id": "gpt-6.1-sol-jev_offload-r5",
+          "repeat": 5,
+          "model_duration_s": 822.9220000000205,
+          "outcome": "success"
+        }
+      ]
+    }
+  ],
+  "scope": "Completed React pilot only; original and owner-requested rerun revision. No ongoing paired-study results."
+}
