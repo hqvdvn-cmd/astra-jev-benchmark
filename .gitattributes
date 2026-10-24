@@ -1,0 +1,2 @@
+# Preserve exact deployed artifact bytes; deployment-hashes.json audits these.
+docs/gallery/** -text
