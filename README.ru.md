@@ -10,6 +10,47 @@
 
 В опубликованном сентябрьском замере работает одна модель: `gpt-6-astra` с уровнем рассуждения `xhigh`. Пользовательские дополнения, перехватчики, приложения, память и параллельные агенты отключены. Jev не передаёт работу Luna, Terra, Sol или другой языковой модели. Он выбирает ограниченные решения из заданных для каждого задания списков; саму работу выполняет Astra.
 
+## Галерея сайтов и проведённые тесты
+
+[Открыть публичную галерею](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/).
+
+Проверены `gpt-6-astra` и `gpt-6.1-sol`, baseline и Jev offload, по пять независимых прогонов: 20 ячеек. Один ORBIT React-промпт, стартер и ассеты; xhigh, 900 секунд; 18 внешних функциональных проверок. После трёх повторов: 17 успехов, 2 тайм-аута и 1 ошибка проверок. Исходная серия — 16/20. Качество дизайна не оценивалось автоматически.
+
+Ссылки ниже ведут на все 20 основных вариантов, включая неудачные. Astra baseline r1 остался стартером. Далее отдельно указаны 5 частичных архивных вариантов. Текущий замер связок сюда не включён. При публикации изменены только адреса статических ассетов для подкаталогов GitHub Pages; исходные результаты проверок сохранены.
+
+| Модель / режим / повтор | Результат | Сайт |
+|---|---|---|
+| gpt-6-astra / baseline / 1 | TIME LIMIT | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6-astra-baseline-r1/site/) |
+| gpt-6-astra / baseline / 2 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6-astra-baseline-r2/site/) |
+| gpt-6-astra / baseline / 3 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6-astra-baseline-r3/site/) |
+| gpt-6-astra / baseline / 4 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6-astra-baseline-r4/site/) |
+| gpt-6-astra / baseline / 5 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6-astra-baseline-r5/site/) |
+| gpt-6-astra / jev_offload / 1 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6-astra-jev_offload-r1/site/) |
+| gpt-6-astra / jev_offload / 2 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6-astra-jev_offload-r2/site/) |
+| gpt-6-astra / jev_offload / 3 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6-astra-jev_offload-r3/site/) |
+| gpt-6-astra / jev_offload / 4 | CHECK FAILED | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6-astra-jev_offload-r4/site/) |
+| gpt-6-astra / jev_offload / 5 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6-astra-jev_offload-r5/site/) |
+| gpt-6.1-sol / baseline / 1 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6.1-sol-baseline-r1/site/) |
+| gpt-6.1-sol / baseline / 2 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6.1-sol-baseline-r2/site/) |
+| gpt-6.1-sol / baseline / 3 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6.1-sol-baseline-r3/site/) |
+| gpt-6.1-sol / baseline / 4 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6.1-sol-baseline-r4/site/) |
+| gpt-6.1-sol / baseline / 5 | TIME LIMIT | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6.1-sol-baseline-r5/site/) |
+| gpt-6.1-sol / jev_offload / 1 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6.1-sol-jev_offload-r1/site/) |
+| gpt-6.1-sol / jev_offload / 2 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6.1-sol-jev_offload-r2/site/) |
+| gpt-6.1-sol / jev_offload / 3 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6.1-sol-jev_offload-r3/site/) |
+| gpt-6.1-sol / jev_offload / 4 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6.1-sol-jev_offload-r4/site/) |
+| gpt-6.1-sol / jev_offload / 5 | PASS | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/gpt-6.1-sol-jev_offload-r5/site/) |
+
+### Архив прерываний — частичные сайты
+
+| Модель / режим / повтор | Результат | Сайт |
+|---|---|---|
+| gpt-6-astra / jev_offload / 3 | SERVICE INTERRUPTED | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/archive-1-gpt-6-astra-jev_offload-r3/site/) |
+| gpt-6.1-sol / jev_offload / 3 | SERVICE INTERRUPTED | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/archive-2-gpt-6.1-sol-jev_offload-r3/site/) |
+| gpt-6-astra / baseline / 1 | SERVICE INTERRUPTED | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/archive-3-gpt-6-astra-baseline-r1/site/) |
+| gpt-6.1-sol / baseline / 1 | SERVICE INTERRUPTED | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/archive-4-gpt-6.1-sol-baseline-r1/site/) |
+| gpt-6.1-sol / jev_offload / 1 | SERVICE INTERRUPTED | [Открыть](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/archive-5-gpt-6.1-sol-jev_offload-r1/site/) |
+
 ## Результат
 
 Опубликованный прогон содержит 45 попыток: три задания, пять режимов и три повтора каждого сочетания задания и режима.

@@ -1,0 +1,502 @@
+{
+  "gpt-6-astra-baseline-r1/site/assets/index-Ch9eZn3x.css": {
+    "original_sha256": "b26b6459ba74fdd319f5e1a7d1c8c9822a9be90466e19a49ccee931f3f404dc0",
+    "published_sha256": "b26b6459ba74fdd319f5e1a7d1c8c9822a9be90466e19a49ccee931f3f404dc0",
+    "url_relocated": false
+  },
+  "gpt-6-astra-baseline-r1/site/assets/index-UN4WjiJb.js": {
+    "original_sha256": "d4d164c3d821db22ecdbdb8708e861b3ffec286badd164a6c7968bfb032154cf",
+    "published_sha256": "d4d164c3d821db22ecdbdb8708e861b3ffec286badd164a6c7968bfb032154cf",
+    "url_relocated": false
+  },
+  "gpt-6-astra-baseline-r1/site/index.html": {
+    "original_sha256": "ed95febe6ff65ffd3fc664218338f081ad435c97faa5e108af76f203f0f21895",
+    "published_sha256": "d9cc98b6b13ed54968ce05bed9a583a1ed3c6c852c05e3d168e9374ee6957121",
+    "url_relocated": true
+  },
+  "gpt-6-astra-baseline-r1/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6-astra-baseline-r2/site/assets/index-C8SRLJkx.js": {
+    "original_sha256": "4261bd4606c0781a79b8b64486ab106882d8da07d26a25b6ac8700e040b39214",
+    "published_sha256": "fbecdce5ed9fa1c157e445d444ab765e1c70b11fc76c44baba75866565e8f11f",
+    "url_relocated": true
+  },
+  "gpt-6-astra-baseline-r2/site/assets/index-iM0A4vJ7.css": {
+    "original_sha256": "d9d93b2ce296aa682e9fb20cec98e7a7c6876689ca58fe217b9bc723fde3aa37",
+    "published_sha256": "d9d93b2ce296aa682e9fb20cec98e7a7c6876689ca58fe217b9bc723fde3aa37",
+    "url_relocated": false
+  },
+  "gpt-6-astra-baseline-r2/site/index.html": {
+    "original_sha256": "408d04b2c307f631d9aed14054348e42c8b1354926af90a19db430bdf3c1bb0c",
+    "published_sha256": "3148f461217710682bcc4b778c4f3318d2b4db6cd13496a1bad02cb7702af5b3",
+    "url_relocated": true
+  },
+  "gpt-6-astra-baseline-r2/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6-astra-baseline-r3/site/assets/index-Dcyi-p9f.css": {
+    "original_sha256": "6f61a119e08909d1a15b102d99cc611ff1a55bf75a5fdd044a3aa0a15efdf287",
+    "published_sha256": "6f61a119e08909d1a15b102d99cc611ff1a55bf75a5fdd044a3aa0a15efdf287",
+    "url_relocated": false
+  },
+  "gpt-6-astra-baseline-r3/site/assets/index-iebi7asI.js": {
+    "original_sha256": "552a79cd35ab1797b53af9a300f168eafdd6a42d5462e8d0c4fa26e358627053",
+    "published_sha256": "891cd0a7bd6046cf7b0d2496c77848d53777bc4d05845b00a112dfbe90fcafa6",
+    "url_relocated": true
+  },
+  "gpt-6-astra-baseline-r3/site/index.html": {
+    "original_sha256": "1fc2ca0633dd011485c4c0972a51e875b0d65a7e4ac47d6c6a900f3173f8455b",
+    "published_sha256": "fb653e6031f8738fbebd6983d9110a9431b9beb4c7e0142b470188af74525bc6",
+    "url_relocated": true
+  },
+  "gpt-6-astra-baseline-r3/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6-astra-baseline-r4/site/assets/index-BCVEPzqO.css": {
+    "original_sha256": "bf94ba62edce007bf45bacd646efdc8899c7c0ef0a0f97cd0f20a915e7c95fa7",
+    "published_sha256": "bf94ba62edce007bf45bacd646efdc8899c7c0ef0a0f97cd0f20a915e7c95fa7",
+    "url_relocated": false
+  },
+  "gpt-6-astra-baseline-r4/site/assets/index-Bh6SGMDv.js": {
+    "original_sha256": "0f7fe2d002bc924e9b0dab7c3479886648e9215b33afd556b9d237646b519ac3",
+    "published_sha256": "60b97350ddeaa7c8e0912c479493f9bc44bcc0e1218861b707b1fc1b61ced607",
+    "url_relocated": true
+  },
+  "gpt-6-astra-baseline-r4/site/index.html": {
+    "original_sha256": "0c9152afffab0e91d492fbb2b71ccf7a6245f119b22dcb5816ae3b48c0b0d401",
+    "published_sha256": "9749c20a7b00932cc7f137fb6ffc04f7ebac84ef2cab6687eeaec77826fe4089",
+    "url_relocated": true
+  },
+  "gpt-6-astra-baseline-r4/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6-astra-baseline-r5/site/assets/index-Bas2xxkV.css": {
+    "original_sha256": "dc60f557bd17925d84203a7ab91ea3d04a23efd85a73edfbe1dc39bb7b8b59bc",
+    "published_sha256": "dc60f557bd17925d84203a7ab91ea3d04a23efd85a73edfbe1dc39bb7b8b59bc",
+    "url_relocated": false
+  },
+  "gpt-6-astra-baseline-r5/site/assets/index-DcfC8QuN.js": {
+    "original_sha256": "4b85506813a9f70da0b6f8968a1fa8166229a4882bf837678679bf7d511572b8",
+    "published_sha256": "8f7b0f72675f51252dd1d68740f007ebe34f06aa6c36515e7230ec5edb8fd19f",
+    "url_relocated": true
+  },
+  "gpt-6-astra-baseline-r5/site/index.html": {
+    "original_sha256": "2ba6c802ed8d2fb252349fb0f8766a89408df054e9ad9df890550b9b2c8b17a6",
+    "published_sha256": "f0aece12154fc07a09588661d30b4f283529002e6cdf05b4163bf4791836b277",
+    "url_relocated": true
+  },
+  "gpt-6-astra-baseline-r5/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6-astra-jev_offload-r1/site/assets/index-DkKVRq3Y.js": {
+    "original_sha256": "232f27bcd29ab27bd7797dfe6b16c134844f3e7aa6928c033fe089b9b5a8c8d2",
+    "published_sha256": "e91188cebb62bbf4831915fe1da634dfe9eaba2142a706bcd3b1d43d1987eb22",
+    "url_relocated": true
+  },
+  "gpt-6-astra-jev_offload-r1/site/assets/index-wtliMumP.css": {
+    "original_sha256": "f5a310de128ca3b6e4eb5ba14e6e7d4138bcd5a098076bf34bb1607542e200b6",
+    "published_sha256": "f5a310de128ca3b6e4eb5ba14e6e7d4138bcd5a098076bf34bb1607542e200b6",
+    "url_relocated": false
+  },
+  "gpt-6-astra-jev_offload-r1/site/index.html": {
+    "original_sha256": "2578d1cab1d3f30ca15dd58932597abaa815b876fc520f1727ba2009469560c3",
+    "published_sha256": "24b64c6b0c2a7d30660fa53186d633847ecc8807baaa104a4838e9e829b96a7d",
+    "url_relocated": true
+  },
+  "gpt-6-astra-jev_offload-r1/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6-astra-jev_offload-r2/site/assets/index-BQ3UlmUS.js": {
+    "original_sha256": "79a9ee374035ad905d9a773612ac48db9290749e7d09bdd4b0f9b31030c0a894",
+    "published_sha256": "77dedaa9c04c24f80b21079c73697ec187eaddc14dd379ecabb8fb950b2c18ce",
+    "url_relocated": true
+  },
+  "gpt-6-astra-jev_offload-r2/site/assets/index-D2SY-keS.css": {
+    "original_sha256": "76653e089816188537dcc9825d4d0a2a0496b143c539ba43a5fd084230d478b9",
+    "published_sha256": "76653e089816188537dcc9825d4d0a2a0496b143c539ba43a5fd084230d478b9",
+    "url_relocated": false
+  },
+  "gpt-6-astra-jev_offload-r2/site/index.html": {
+    "original_sha256": "1bd740a73700f33a6cd645a68b0cd86ee8c4a0378407c296ba5bd3239bb648fb",
+    "published_sha256": "1b22932d527953eae977391ce217b6a7cc2e3565ae0c6c230517e6e723a93b56",
+    "url_relocated": true
+  },
+  "gpt-6-astra-jev_offload-r2/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6-astra-jev_offload-r3/site/assets/index-CaMTINEj.css": {
+    "original_sha256": "e4c844e19b5c1c660eba8e7d3b84279fbfe074052a72c43b85ad9a2e6914e2a0",
+    "published_sha256": "e4c844e19b5c1c660eba8e7d3b84279fbfe074052a72c43b85ad9a2e6914e2a0",
+    "url_relocated": false
+  },
+  "gpt-6-astra-jev_offload-r3/site/assets/index-DqRxaDPM.js": {
+    "original_sha256": "88b7880072e6297c59e6c13e1241f23c016a7c783607517317ad7f5b5252e532",
+    "published_sha256": "38a793643221637a58d29ea3f129aaa6a0ef103710725e61ebf7d8d561244dbf",
+    "url_relocated": true
+  },
+  "gpt-6-astra-jev_offload-r3/site/index.html": {
+    "original_sha256": "2ce3eb237254628a265980d1420a5c046790983a09a46cb6c844c289bbb30032",
+    "published_sha256": "cfe1c1ac4fd313655b91050dea40f83031ca27f8ec05468e1b44b44df229f204",
+    "url_relocated": true
+  },
+  "gpt-6-astra-jev_offload-r3/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6-astra-jev_offload-r4/site/assets/index-Cslp2rtd.js": {
+    "original_sha256": "6eb018aa5cdfbf08311fef1085e5cd118f6e920ef521592d308bfeafaec07d89",
+    "published_sha256": "bf35f411addff3033e49f1ab2e1caea4ae1d7e9bcdaa8320f3296e6fe705547e",
+    "url_relocated": true
+  },
+  "gpt-6-astra-jev_offload-r4/site/assets/index-DWIZuXpI.css": {
+    "original_sha256": "dec382f13f21c2dc2de4b37b216288f82e5dcfd11b452fcbacf7c582396c1b36",
+    "published_sha256": "dec382f13f21c2dc2de4b37b216288f82e5dcfd11b452fcbacf7c582396c1b36",
+    "url_relocated": false
+  },
+  "gpt-6-astra-jev_offload-r4/site/index.html": {
+    "original_sha256": "275189a40248571ddb0acc71d7ca326f8f6db8065d48ebab65c70ecf80f3cd55",
+    "published_sha256": "2bfd46d72a41e79dda4df0f02675d3484313ce1595713c38ecaf10ea39955f0b",
+    "url_relocated": true
+  },
+  "gpt-6-astra-jev_offload-r4/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6-astra-jev_offload-r5/site/assets/index-BMMZvz0h.js": {
+    "original_sha256": "cc5318658e135633aa9e7658ce9ed8d93e206b33ed142a90a1db0dfd8802822a",
+    "published_sha256": "f9f38ab83a43c44bf7950c4c10aedcd124802d9a40150e8bb45dc5d79993781b",
+    "url_relocated": true
+  },
+  "gpt-6-astra-jev_offload-r5/site/assets/index-DA_lij89.css": {
+    "original_sha256": "c208ef9c68c20cd2831dff2201c84927f94725c01ad4ec0e3e9054e476fd030c",
+    "published_sha256": "c208ef9c68c20cd2831dff2201c84927f94725c01ad4ec0e3e9054e476fd030c",
+    "url_relocated": false
+  },
+  "gpt-6-astra-jev_offload-r5/site/index.html": {
+    "original_sha256": "ab0c8b682aa01539bd5175214e5ed62cee544d8d4652b29c1a54d220415b570f",
+    "published_sha256": "229401973ae681d614bda7e86fee2bf1c8c7a45ef9d07789d2245cef7edb6e02",
+    "url_relocated": true
+  },
+  "gpt-6-astra-jev_offload-r5/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-baseline-r1/site/assets/index-Ca56NEFe.js": {
+    "original_sha256": "62d200259dc37848a2afdd7c75a74fe37a707068fd33d3391f9b464deba82e1d",
+    "published_sha256": "24cd101db38636a1617d832cc2ac22f53e709d205f36a29df22c969b22d3271f",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-baseline-r1/site/assets/index-Fm32jWcu.css": {
+    "original_sha256": "072a47633b4e4376ca84092c550b383a11742986b4d7854c24f7d0bb3df40053",
+    "published_sha256": "072a47633b4e4376ca84092c550b383a11742986b4d7854c24f7d0bb3df40053",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-baseline-r1/site/index.html": {
+    "original_sha256": "616a6f7c7cca075606ea23a99920705527172529c2900a138e277b2ebeb13e2c",
+    "published_sha256": "cad2b18ab1ac5bfc29b66072e4e338b9eb0e6d31c255f9f4159191c4c1d3278d",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-baseline-r1/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-baseline-r2/site/assets/index-Ck0ulzJp.css": {
+    "original_sha256": "d43f29435cc5ec730f73a34ac17a61c7afd361514f6b9f98cfe99746af3571da",
+    "published_sha256": "d43f29435cc5ec730f73a34ac17a61c7afd361514f6b9f98cfe99746af3571da",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-baseline-r2/site/assets/index-DHjlNt6D.js": {
+    "original_sha256": "5e2df50b01d430273cd60853b9fd439f4f4540fde81228f5e674fb942c51eac7",
+    "published_sha256": "9758183ca8456ef0a622e783feec08812e756fd8a64b2b0f751cc0f4251e615a",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-baseline-r2/site/index.html": {
+    "original_sha256": "0233fd24c2eef409483452c7af973630eddba1449b1d700be074fa6772f1dc38",
+    "published_sha256": "7a538eeec4897774c8082ea32205cc99c93b57d914bfcc4b04e896d9a046f637",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-baseline-r2/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-baseline-r3/site/assets/index-C6BF3TgK.js": {
+    "original_sha256": "c122d9aec4797797cb4d2c79424f7af6835695a866a5645ababbe25cf0540bfe",
+    "published_sha256": "d0dfa6325e9dabfadacd58611b17b354f347f1d0a1314f184f48937510979f63",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-baseline-r3/site/assets/index-e_rHqgLG.css": {
+    "original_sha256": "6b2bed9f7c5ecaa8e6867f201b5cf7cecac55b4f7e61ac90c29b3bb0f00d5c8e",
+    "published_sha256": "6b2bed9f7c5ecaa8e6867f201b5cf7cecac55b4f7e61ac90c29b3bb0f00d5c8e",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-baseline-r3/site/index.html": {
+    "original_sha256": "a285a49dbac7155e46bd41106650887ce64877f97e53c8ebacec7ae8e08ecffb",
+    "published_sha256": "45b82dc5a562837679fb3ec92b4d0dc745186974c701f86df56e798aaeb84179",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-baseline-r3/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-baseline-r4/site/assets/index-475-9tsT.css": {
+    "original_sha256": "0f5e963d4c8898a323678f01204e0494966ee590a8ac55cb56eb1aa17184a954",
+    "published_sha256": "0f5e963d4c8898a323678f01204e0494966ee590a8ac55cb56eb1aa17184a954",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-baseline-r4/site/assets/index-B3KwWund.js": {
+    "original_sha256": "05d299616e896331d8c6f244b34045b256aba41382d435ce3b1a2f4e916fea04",
+    "published_sha256": "da059b764d3a0180a7e75a5b61d0ce1daa217190e4202b30e0ab5888d65716a9",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-baseline-r4/site/index.html": {
+    "original_sha256": "e50437c3541ed3c39e1f73bb734321550f90b0b0b3471afc74e6dc27401fe4d7",
+    "published_sha256": "7522c8ee53fc27fc15d15aa23bbbb56dea495b4cb5d264d84816b3852520e5a3",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-baseline-r4/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-baseline-r5/site/assets/index-B3Lx5C6N.js": {
+    "original_sha256": "5a37cdf03aa5a915f82a656d7bf9a2b2337d64d1429d87419b2e55dd9d5fa7c9",
+    "published_sha256": "5bcbc2876cbbfa665bf6171d0e82025f800936521ec9c8986de21a2404f860b5",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-baseline-r5/site/assets/index-BzLG5TES.css": {
+    "original_sha256": "2561f16bcda5a1c0496974f03e794fb380daa91cfca060c4f4bd4a5fc7809912",
+    "published_sha256": "2561f16bcda5a1c0496974f03e794fb380daa91cfca060c4f4bd4a5fc7809912",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-baseline-r5/site/index.html": {
+    "original_sha256": "004a0f86eabdabac248ddb0b91dddd94470cc76ec1181da677fc532d5ddf086c",
+    "published_sha256": "112662ef5cc26b025ea7c145e9b7f60579e2d2621a477b84acf249d95182575f",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-baseline-r5/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-jev_offload-r1/site/assets/index-C8mkLQxb.js": {
+    "original_sha256": "9a8bb4c3461e0fb48e678a59515d9ebfdacc382aaabdf5fc151915a611b066f9",
+    "published_sha256": "7a8410557778e79fb5da57750572bc50c51c8b90e5a297304ef3fea8c7cc7d14",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-jev_offload-r1/site/assets/index-DUPTgYXr.css": {
+    "original_sha256": "7b4ed478c384da70bf83521871324cb6cf749ac9683ee3a12221e002a1043177",
+    "published_sha256": "7b4ed478c384da70bf83521871324cb6cf749ac9683ee3a12221e002a1043177",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-jev_offload-r1/site/index.html": {
+    "original_sha256": "141efeded680d9052512cea78cf921d45933fdf6674ec4e21e9ec7c4fa46a651",
+    "published_sha256": "e31d2c94891655f24764fd8c034da05cbf2f43f91b9dfba0944ff893dd4aa07b",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-jev_offload-r1/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-jev_offload-r2/site/assets/index-Bq5tYWE-.js": {
+    "original_sha256": "4b52c91c32222736f474d9f91bdb3c141ab201a29fad4db9ab29776726ad5af3",
+    "published_sha256": "c19522bc2a0cc2db674b89a0ec3d499253e3e416bd239a6d1b776f6e6cc414e3",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-jev_offload-r2/site/assets/index-DIIsQ9gk.css": {
+    "original_sha256": "93711fb3529262bce0817466fdfbac69917ad760f04b6cfd73c04a47ab760d87",
+    "published_sha256": "93711fb3529262bce0817466fdfbac69917ad760f04b6cfd73c04a47ab760d87",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-jev_offload-r2/site/index.html": {
+    "original_sha256": "839822247bbee22000b3d58192fdab725f6efe935ea858fe18a8affc8b6e7df6",
+    "published_sha256": "04446253760bf97ececb986dcd7fbb300964dc3b5089b139bf775196afcb943e",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-jev_offload-r2/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-jev_offload-r3/site/assets/index-f9wxYzvm.js": {
+    "original_sha256": "c6e2d07f66619bcc579eb809dfd259f3fb7a8e3686d31cbc02657acc71057e31",
+    "published_sha256": "9576574684acfeabfa98c7887cdb7944ecd08830c75f9f7cc3239bbbe8ee66ac",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-jev_offload-r3/site/assets/index-xLjRh86o.css": {
+    "original_sha256": "f8d187da2492808399460091bb968cd3fc8419dc36c385bc9e1be195ee0dc073",
+    "published_sha256": "f8d187da2492808399460091bb968cd3fc8419dc36c385bc9e1be195ee0dc073",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-jev_offload-r3/site/index.html": {
+    "original_sha256": "4e11d4c0eed3f481a21af6050d5b659c7e2afd1e2b4bdc39f04c520b164b34e0",
+    "published_sha256": "f88abd615be59396e3d16ac5ca4ca0201362331388cfa4a74e59b175b94eb104",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-jev_offload-r3/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-jev_offload-r4/site/assets/index-D7-QJneW.css": {
+    "original_sha256": "7663736e5fe360f7ef8fea0cd33e8b93b065b6dd1a08cf495886f7f0aefb9069",
+    "published_sha256": "7663736e5fe360f7ef8fea0cd33e8b93b065b6dd1a08cf495886f7f0aefb9069",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-jev_offload-r4/site/assets/index-DAEHY2be.js": {
+    "original_sha256": "23e2b8d88aa65fa05877fd0e3f5bcb0b51513c0b626841c9a5571bc53dbd7091",
+    "published_sha256": "b98107421b01c77d9923f49d9c7ebcd8eb4f83f9380ffff055d1ce850e34d554",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-jev_offload-r4/site/index.html": {
+    "original_sha256": "984187d3201ce2a097627e6a84f012c5adba5b4572193dbbd30083ffc7351f51",
+    "published_sha256": "9bdb2c3620f1855a535eab355104cca278468bfa326c87d8f03a616a4f6cee4c",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-jev_offload-r4/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-jev_offload-r5/site/assets/index-Aca0oiYQ.css": {
+    "original_sha256": "c6a5023b217acad08184574d1106578c4fbff80068549b610f242f656481238a",
+    "published_sha256": "c6a5023b217acad08184574d1106578c4fbff80068549b610f242f656481238a",
+    "url_relocated": false
+  },
+  "gpt-6.1-sol-jev_offload-r5/site/assets/index-DUpf8Saz.js": {
+    "original_sha256": "c1d590cce5d4cc0479ff240955f1a4d4d1d9acde247bd68a142c2b69ffb79894",
+    "published_sha256": "9ff0f309d3ad857a49f942efd563d66caa56b2bbe1279663ca5a19ec3d406c48",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-jev_offload-r5/site/index.html": {
+    "original_sha256": "f94744defaa33fbcfdaebbd736a78ff29d2b1adee5e4e5fa0bb5c0336a41a88f",
+    "published_sha256": "273e53b2ef70dc5a773ace44f54f291ad91ee19e206ce72044da26d785405938",
+    "url_relocated": true
+  },
+  "gpt-6.1-sol-jev_offload-r5/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "archive-1-gpt-6-astra-jev_offload-r3/site/assets/index-B_GYiDMC.js": {
+    "original_sha256": "9348a8b2ca4f7727f3f24ca97908807377d74d1acc13c8ef3c062a0043c20e3f",
+    "published_sha256": "8724d5a4d8deb016fd680cc1a35703297e1b29c6f5853197dbfa37baf1c897ff",
+    "url_relocated": true
+  },
+  "archive-1-gpt-6-astra-jev_offload-r3/site/assets/index-Ch9eZn3x.css": {
+    "original_sha256": "b26b6459ba74fdd319f5e1a7d1c8c9822a9be90466e19a49ccee931f3f404dc0",
+    "published_sha256": "b26b6459ba74fdd319f5e1a7d1c8c9822a9be90466e19a49ccee931f3f404dc0",
+    "url_relocated": false
+  },
+  "archive-1-gpt-6-astra-jev_offload-r3/site/index.html": {
+    "original_sha256": "80de98b743634d8840e2ff69d8d6c81a5ee6b45b7aac37003987cb8a242edaf9",
+    "published_sha256": "42c6caf61a0c42a65e0ab574d0070b3cb55e5668aa7986a26759e2b5e2191dcf",
+    "url_relocated": true
+  },
+  "archive-1-gpt-6-astra-jev_offload-r3/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "archive-2-gpt-6.1-sol-jev_offload-r3/site/assets/index-CwhzYp7w.css": {
+    "original_sha256": "37ccd257acad968c43bc9610892acf6af403f0437385c0518572d0a8715ed868",
+    "published_sha256": "37ccd257acad968c43bc9610892acf6af403f0437385c0518572d0a8715ed868",
+    "url_relocated": false
+  },
+  "archive-2-gpt-6.1-sol-jev_offload-r3/site/assets/index-DzP995Vq.js": {
+    "original_sha256": "606d66d069c93cbe788c6322927df9f1d1d2de4c3b14f18cf4f4d148c171996e",
+    "published_sha256": "dfa32a7ddaedb357a0584d39e02dbdb23c20751e5ed05b83b9c63a2141592b13",
+    "url_relocated": true
+  },
+  "archive-2-gpt-6.1-sol-jev_offload-r3/site/index.html": {
+    "original_sha256": "d340803379f540cfc5c0b54834d4952d5cd44b779020860cce8dfdb6db5e17c3",
+    "published_sha256": "1f1fe6ae61bd3890154dd7123b908771e226c1e57ee05b2fe321b685e7421303",
+    "url_relocated": true
+  },
+  "archive-2-gpt-6.1-sol-jev_offload-r3/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "archive-3-gpt-6-astra-baseline-r1/site/assets/index-pZ2DjqLq.css": {
+    "original_sha256": "5fdc0d730df44f4f422f94d3c544ebb0d7569a404702b07490e0a7bc4de92f58",
+    "published_sha256": "5fdc0d730df44f4f422f94d3c544ebb0d7569a404702b07490e0a7bc4de92f58",
+    "url_relocated": false
+  },
+  "archive-3-gpt-6-astra-baseline-r1/site/assets/index-s4THIOy2.js": {
+    "original_sha256": "9e3bc8c3deb8cf4c7302c724e4fe79bda482d2f40bfe3588379f596d2e732181",
+    "published_sha256": "a5b4ead34660c96ec6e79924d00c59a1c68dd0360d31d3b99261a0fea520f467",
+    "url_relocated": true
+  },
+  "archive-3-gpt-6-astra-baseline-r1/site/index.html": {
+    "original_sha256": "b8e8973243757941eb81eb83fb13f02d36c843ef395286f296e0b4805d097c38",
+    "published_sha256": "3a182629b873721e1e61705a1fdae7094477f112299e31ebf1de3ac887728fd3",
+    "url_relocated": true
+  },
+  "archive-3-gpt-6-astra-baseline-r1/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "archive-4-gpt-6.1-sol-baseline-r1/site/assets/index-36I-JAop.js": {
+    "original_sha256": "c6c0cc0c1af665c680a78a19c36f8449d736dba1bbba238bcab42ecc7622fb2c",
+    "published_sha256": "60edab39388a141ba013349fcda09945528d58ba1f62b216c339c79387dbe1fb",
+    "url_relocated": true
+  },
+  "archive-4-gpt-6.1-sol-baseline-r1/site/assets/index-Ch9eZn3x.css": {
+    "original_sha256": "b26b6459ba74fdd319f5e1a7d1c8c9822a9be90466e19a49ccee931f3f404dc0",
+    "published_sha256": "b26b6459ba74fdd319f5e1a7d1c8c9822a9be90466e19a49ccee931f3f404dc0",
+    "url_relocated": false
+  },
+  "archive-4-gpt-6.1-sol-baseline-r1/site/index.html": {
+    "original_sha256": "8085c7b78a3cc9a69ab53d873cc48b6902cca6bd1d074590d533f35ec9d05fb2",
+    "published_sha256": "d38a5fe5bf93d76aad616d09d748b8008b5b7cf18da9543ac8bb321fc8fc3bc5",
+    "url_relocated": true
+  },
+  "archive-4-gpt-6.1-sol-baseline-r1/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  },
+  "archive-5-gpt-6.1-sol-jev_offload-r1/site/assets/index-Ch9eZn3x.css": {
+    "original_sha256": "b26b6459ba74fdd319f5e1a7d1c8c9822a9be90466e19a49ccee931f3f404dc0",
+    "published_sha256": "b26b6459ba74fdd319f5e1a7d1c8c9822a9be90466e19a49ccee931f3f404dc0",
+    "url_relocated": false
+  },
+  "archive-5-gpt-6.1-sol-jev_offload-r1/site/assets/index-UN4WjiJb.js": {
+    "original_sha256": "d4d164c3d821db22ecdbdb8708e861b3ffec286badd164a6c7968bfb032154cf",
+    "published_sha256": "d4d164c3d821db22ecdbdb8708e861b3ffec286badd164a6c7968bfb032154cf",
+    "url_relocated": false
+  },
+  "archive-5-gpt-6.1-sol-jev_offload-r1/site/index.html": {
+    "original_sha256": "ed95febe6ff65ffd3fc664218338f081ad435c97faa5e108af76f203f0f21895",
+    "published_sha256": "4b39a05c7d93f005d19f07e1d04a91c05f34cf300f341bdd94fffca87f9f12e4",
+    "url_relocated": true
+  },
+  "archive-5-gpt-6.1-sol-jev_offload-r1/site/orbit-loop.mp4": {
+    "original_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "published_sha256": "775007ffffcba28980ce6e09bb5bce783b1e2e93dd37683ddd9eba7bd2455356",
+    "url_relocated": false
+  }
+}
