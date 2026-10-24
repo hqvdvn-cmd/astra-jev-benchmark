@@ -6,6 +6,8 @@ A reproducible comparison of GPT models with and without bounded Jev decisions. 
 
 **React harness and tests:** [`react-sol-pilot` branch](https://github.com/hqvdvn-cmd/astra-jev-benchmark/tree/react-sol-pilot). It contains the website task, isolated runner, browser checks, tests and curated evidence. The results below cover the completed solo-model pilot; the ongoing planner/builder study is excluded.
 
+**Conducted in that branch:** Astra vs Sol 6.1, baseline vs Jev offload, five independent runs per combination — 20 scored cells, `xhigh`, 900 seconds. The external build and 18 browser checks cover projects/filters, pricing, FAQ, enquiry validation and keyboard focus, video controls, mobile widths, reduced motion and runtime/network errors. [Open the public site gallery](https://hqvdvn-cmd.github.io/astra-jev-benchmark/gallery/) or use the [branch README with all 25 individual site links](https://github.com/hqvdvn-cmd/astra-jev-benchmark/tree/react-sol-pilot#website-gallery-and-completed-tests): 20 active outputs plus 5 archived partial versions.
+
 ## Completed React website benchmark — October 2026
 
 `gpt-6-astra` and `gpt-6.1-sol` each built the same ORBIT React website, with and without Jev offload, five independent runs per combination: **20 cells**. All runs used the same prompt, clean starter, pinned dependencies, local six-second video, `xhigh` reasoning and a 900-second GPT budget. Jev selected a bounded strategy; GPT implemented the site. External build and browser checks tested 18 conditions, including filters, pricing, forms, keyboard focus, video controls and mobile behavior.
