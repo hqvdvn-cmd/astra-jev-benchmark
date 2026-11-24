@@ -1,0 +1,471 @@
+{
+  "schema_version": 1,
+  "run_name": "deepswe-pilot-10-v1",
+  "manifest_name": "deepswe-pilot-10",
+  "modes": [
+    "codex-baseline",
+    "jev-auto"
+  ],
+  "baseline_model": "openai/gpt-6.2-sol",
+  "baseline_effort": "high",
+  "pairs": [
+    {
+      "index": 1,
+      "task_id": "abs-module-cache-flags",
+      "language": "go",
+      "runs": {
+        "codex-baseline": {
+          "task_id": "abs-module-cache-flags",
+          "mode": "codex-baseline",
+          "trial_dir": "abs-module-cache-flags/codex-baseline/2026-11-24__17-11-22/abs-module-cache-flags__tsXg5q5",
+          "returncode": 0,
+          "valid": true,
+          "invalid_reason": null,
+          "duration_sec": 771.24,
+          "reward": 1,
+          "partial": 1.0,
+          "f2p_passed": 20,
+          "f2p_total": 20,
+          "p2p_passed": 3,
+          "p2p_total": 3,
+          "tokens": {
+            "present": true,
+            "prompt_tokens": 2659608,
+            "cached_tokens": 2583424,
+            "completion_tokens": 27522,
+            "reasoning_tokens": 13603,
+            "steps": 47
+          },
+          "jev_routing": null
+        },
+        "jev-auto": {
+          "task_id": "abs-module-cache-flags",
+          "mode": "jev-auto",
+          "trial_dir": "abs-module-cache-flags/jev-auto/2026-11-24__17-41-47/abs-module-cache-flags__5aXfDgK",
+          "returncode": 0,
+          "valid": true,
+          "invalid_reason": null,
+          "duration_sec": 1070.03,
+          "reward": 1,
+          "partial": 1.0,
+          "f2p_passed": 20,
+          "f2p_total": 20,
+          "p2p_passed": 3,
+          "p2p_total": 3,
+          "tokens": {
+            "present": true,
+            "prompt_tokens": 2748717,
+            "cached_tokens": 814976,
+            "completion_tokens": 36711,
+            "reasoning_tokens": 11514,
+            "steps": 50
+          },
+          "jev_routing": {
+            "total_calls": 47,
+            "models": {
+              "gpt-6.2-sol": 47
+            },
+            "efforts": {
+              "high": 42,
+              "medium": 5
+            },
+            "decision_sources": {
+              "jev": 28,
+              "lease": 18,
+              "technical_fallback": 1
+            },
+            "gates": {
+              "apply": 33,
+              "sol_hard": 9,
+              "jev_error:TimeoutExpired": 1,
+              "confidence_hold": 4
+            },
+            "policy_versions": {
+              "split-v17-terra6.1-default-sol6.2-hard": 47
+            },
+            "lease_hits": 18,
+            "quota_fallback_events": 0,
+            "quota_fallback_detected": false,
+            "error_events": 0,
+            "avg_jev_ms": 1200.2
+          }
+        }
+      }
+    },
+    {
+      "index": 2,
+      "task_id": "expr-try-catch-errors",
+      "language": "go",
+      "runs": {
+        "codex-baseline": {
+          "task_id": "expr-try-catch-errors",
+          "mode": "codex-baseline",
+          "trial_dir": "expr-try-catch-errors/codex-baseline/2026-11-24__18-03-58/expr-try-catch-errors__mkD7CbD",
+          "returncode": 0,
+          "valid": true,
+          "invalid_reason": null,
+          "duration_sec": 1391.23,
+          "reward": 1,
+          "partial": 1.0,
+          "f2p_passed": 79,
+          "f2p_total": 79,
+          "p2p_passed": 66265,
+          "p2p_total": 66265,
+          "tokens": {
+            "present": true,
+            "prompt_tokens": 4225951,
+            "cached_tokens": 4081408,
+            "completion_tokens": 36350,
+            "reasoning_tokens": 18332,
+            "steps": 50
+          },
+          "jev_routing": null
+        },
+        "jev-auto": {
+          "task_id": "expr-try-catch-errors",
+          "mode": "jev-auto",
+          "trial_dir": "expr-try-catch-errors/jev-auto/2026-11-24__18-27-10/expr-try-catch-errors__enAL7iK",
+          "returncode": 0,
+          "valid": true,
+          "invalid_reason": null,
+          "duration_sec": 1407.12,
+          "reward": 0,
+          "partial": 0.9999698540938141,
+          "f2p_passed": 77,
+          "f2p_total": 79,
+          "p2p_passed": 66265,
+          "p2p_total": 66265,
+          "tokens": {
+            "present": true,
+            "prompt_tokens": 3593629,
+            "cached_tokens": 1224704,
+            "completion_tokens": 38029,
+            "reasoning_tokens": 13811,
+            "steps": 53
+          },
+          "jev_routing": {
+            "total_calls": 50,
+            "models": {
+              "gpt-6.2-sol": 50
+            },
+            "efforts": {
+              "high": 45,
+              "medium": 5
+            },
+            "decision_sources": {
+              "jev": 35,
+              "lease": 11,
+              "technical_fallback": 4
+            },
+            "gates": {
+              "confidence_hold": 10,
+              "apply": 25,
+              "jev_error:TimeoutExpired": 4,
+              "sol_hard": 11
+            },
+            "policy_versions": {
+              "split-v17-terra6.1-default-sol6.2-hard": 50
+            },
+            "lease_hits": 11,
+            "quota_fallback_events": 0,
+            "quota_fallback_detected": false,
+            "error_events": 0,
+            "avg_jev_ms": 1554.9
+          }
+        }
+      }
+    },
+    {
+      "index": 3,
+      "task_id": "scc-bounded-memory-spilling",
+      "language": "go",
+      "runs": {
+        "codex-baseline": {
+          "task_id": "scc-bounded-memory-spilling",
+          "mode": "codex-baseline",
+          "trial_dir": "scc-bounded-memory-spilling/codex-baseline/2026-11-24__18-50-40/scc-bounded-memory-spilling__UjU4fFQ",
+          "returncode": 0,
+          "valid": true,
+          "invalid_reason": null,
+          "duration_sec": 1144.94,
+          "reward": 1,
+          "partial": 1.0,
+          "f2p_passed": 31,
+          "f2p_total": 31,
+          "p2p_passed": 286,
+          "p2p_total": 286,
+          "tokens": {
+            "present": true,
+            "prompt_tokens": 3821436,
+            "cached_tokens": 3720320,
+            "completion_tokens": 35604,
+            "reasoning_tokens": 14670,
+            "steps": 55
+          },
+          "jev_routing": null
+        },
+        "jev-auto": {
+          "task_id": "scc-bounded-memory-spilling",
+          "mode": "jev-auto",
+          "trial_dir": "scc-bounded-memory-spilling/jev-auto/2026-11-24__19-09-47/scc-bounded-memory-spilling__7f6fGvr",
+          "returncode": 0,
+          "valid": true,
+          "invalid_reason": null,
+          "duration_sec": 1322.1,
+          "reward": 1,
+          "partial": 1.0,
+          "f2p_passed": 31,
+          "f2p_total": 31,
+          "p2p_passed": 286,
+          "p2p_total": 286,
+          "tokens": {
+            "present": true,
+            "prompt_tokens": 3499003,
+            "cached_tokens": 1204352,
+            "completion_tokens": 40961,
+            "reasoning_tokens": 14657,
+            "steps": 56
+          },
+          "jev_routing": {
+            "total_calls": 53,
+            "models": {
+              "gpt-6.2-sol": 53
+            },
+            "efforts": {
+              "medium": 4,
+              "high": 49
+            },
+            "decision_sources": {
+              "technical_fallback": 4,
+              "jev": 22,
+              "lease": 27
+            },
+            "gates": {
+              "jev_error:TimeoutExpired": 4,
+              "confidence_hold": 30,
+              "apply": 19
+            },
+            "policy_versions": {
+              "split-v17-terra6.1-default-sol6.2-hard": 53
+            },
+            "lease_hits": 27,
+            "quota_fallback_events": 0,
+            "quota_fallback_detected": false,
+            "error_events": 0,
+            "avg_jev_ms": 1752.8
+          }
+        }
+      }
+    },
+    {
+      "index": 4,
+      "task_id": "happy-dom-abort-pending-body-reads",
+      "language": "typescript",
+      "runs": {
+        "codex-baseline": {
+          "task_id": "happy-dom-abort-pending-body-reads",
+          "mode": "codex-baseline",
+          "trial_dir": "happy-dom-abort-pending-body-reads/codex-baseline/2026-11-24__19-31-52/happy-dom-abort-pending-body-rea__NKw48LW",
+          "returncode": 0,
+          "valid": true,
+          "invalid_reason": null,
+          "duration_sec": 1446.51,
+          "reward": 1,
+          "partial": 1.0,
+          "f2p_passed": 14,
+          "f2p_total": 14,
+          "p2p_passed": 165,
+          "p2p_total": 165,
+          "tokens": {
+            "present": true,
+            "prompt_tokens": 2529485,
+            "cached_tokens": 2420352,
+            "completion_tokens": 21447,
+            "reasoning_tokens": 9480,
+            "steps": 37
+          },
+          "jev_routing": null
+        },
+        "jev-auto": {
+          "task_id": "happy-dom-abort-pending-body-reads",
+          "mode": "jev-auto",
+          "trial_dir": "happy-dom-abort-pending-body-reads/jev-auto/2026-11-24__19-55-58/happy-dom-abort-pending-body-rea__sT3Uy6M",
+          "returncode": 0,
+          "valid": true,
+          "invalid_reason": null,
+          "duration_sec": 1182.37,
+          "reward": 0,
+          "partial": 0.994413407821229,
+          "f2p_passed": 14,
+          "f2p_total": 14,
+          "p2p_passed": 164,
+          "p2p_total": 165,
+          "tokens": {
+            "present": true,
+            "prompt_tokens": 4954429,
+            "cached_tokens": 2012288,
+            "completion_tokens": 31279,
+            "reasoning_tokens": 10293,
+            "steps": 68
+          },
+          "jev_routing": {
+            "total_calls": 65,
+            "models": {
+              "gpt-6.2-sol": 65
+            },
+            "efforts": {
+              "high": 58,
+              "medium": 7
+            },
+            "decision_sources": {
+              "jev": 43,
+              "technical_fallback": 6,
+              "lease": 16
+            },
+            "gates": {
+              "confidence_hold": 6,
+              "jev_error:TimeoutExpired": 6,
+              "apply": 53
+            },
+            "policy_versions": {
+              "split-v17-terra6.1-default-sol6.2-hard": 65
+            },
+            "lease_hits": 16,
+            "quota_fallback_events": 0,
+            "quota_fallback_detected": false,
+            "error_events": 0,
+            "avg_jev_ms": 1664.7
+          }
+        }
+      }
+    },
+    {
+      "index": 5,
+      "task_id": "meriyah-explicit-resource-declarations",
+      "language": "typescript",
+      "runs": {
+        "codex-baseline": {
+          "task_id": "meriyah-explicit-resource-declarations",
+          "mode": "codex-baseline",
+          "trial_dir": "meriyah-explicit-resource-declarations/codex-baseline/2026-11-24__20-15-44/meriyah-explicit-resource-declar__PccRWHD",
+          "returncode": 0,
+          "valid": true,
+          "invalid_reason": null,
+          "duration_sec": 1251.19,
+          "reward": 0,
+          "partial": 0.9999223572343647,
+          "f2p_passed": 45,
+          "f2p_total": 49,
+          "p2p_passed": 51469,
+          "p2p_total": 51469,
+          "tokens": {
+            "present": true,
+            "prompt_tokens": 3077358,
+            "cached_tokens": 2966144,
+            "completion_tokens": 16096,
+            "reasoning_tokens": 6404,
+            "steps": 41
+          },
+          "jev_routing": null
+        },
+        "jev-auto": {
+          "task_id": "meriyah-explicit-resource-declarations",
+          "mode": "jev-auto",
+          "trial_dir": "meriyah-explicit-resource-declarations/jev-auto/2026-11-24__20-36-34/meriyah-explicit-resource-declar__GoeMowP",
+          "returncode": 0,
+          "valid": false,
+          "invalid_reason": "quota_fallback_detected",
+          "duration_sec": 150.03,
+          "reward": 0,
+          "partial": 0.9990488761209674,
+          "f2p_passed": 0,
+          "f2p_total": 49,
+          "p2p_passed": 51469,
+          "p2p_total": 51469,
+          "tokens": {
+            "present": true,
+            "prompt_tokens": 0,
+            "cached_tokens": 0,
+            "completion_tokens": 0,
+            "reasoning_tokens": 0,
+            "steps": 3
+          },
+          "jev_routing": {
+            "total_calls": 1,
+            "models": {
+              "gpt-6.2-sol": 1
+            },
+            "efforts": {
+              "high": 1
+            },
+            "decision_sources": {
+              "jev": 1
+            },
+            "gates": {
+              "codex_dry(no_candidate):gpt-6.2-sol": 1
+            },
+            "policy_versions": {
+              "split-v17-terra6.1-default-sol6.2-hard": 1
+            },
+            "lease_hits": 0,
+            "quota_fallback_events": 1,
+            "quota_fallback_detected": true,
+            "error_events": 1,
+            "avg_jev_ms": 674.0
+          }
+        }
+      }
+    },
+    {
+      "index": 6,
+      "task_id": "arktype-json-schema-refs-dependencies",
+      "language": "typescript",
+      "runs": {}
+    },
+    {
+      "index": 7,
+      "task_id": "mashumaro-flattened-dataclass-fields",
+      "language": "python",
+      "runs": {}
+    },
+    {
+      "index": 8,
+      "task_id": "fastapi-implicit-head-options",
+      "language": "python",
+      "runs": {}
+    },
+    {
+      "index": 9,
+      "task_id": "vulture-persistent-analysis-cache",
+      "language": "python",
+      "runs": {}
+    },
+    {
+      "index": 10,
+      "task_id": "oxvg-structural-selector-preservation",
+      "language": "rust",
+      "runs": {}
+    }
+  ],
+  "updated_at": "2026-11-24T17:58:26Z",
+  "aggregate": {
+    "codex-baseline": {
+      "completed": 5,
+      "valid": 5,
+      "passed": 4,
+      "mean_partial": 1.0,
+      "prompt_tokens": 16313838,
+      "cached_tokens": 15771648,
+      "completion_tokens": 137019
+    },
+    "jev-auto": {
+      "completed": 5,
+      "valid": 4,
+      "passed": 2,
+      "mean_partial": 0.9986,
+      "prompt_tokens": 14795778,
+      "cached_tokens": 5256320,
+      "completion_tokens": 146980
+    }
+  }
+}

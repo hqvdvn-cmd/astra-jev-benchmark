@@ -1,0 +1,455 @@
+"""Paired DeepSWE runner comparing plain Codex vs teo-nex/jev-codex-harness (jev/auto).
+
+Runs inside Linux/WSL2 using ``datacurve-pier`` and ``JevbenchDockerEnvironment``
+so all tasks execute under ``network_mode = "no-network"`` isolation with
+controlled Squid egress.
+"""
+
+from __future__ import annotations
+
+import argparse
+import http.client
+import json
+import os
+import subprocess
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+from jev_astra_bench.deepswe_report import (
+    compute_aggregate,
+    count_lines,
+    extract_trial_summary,
+    find_latest_trial_dir,
+    read_jev_log_slice,
+    render_markdown_summary,
+)
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_MANIFEST = REPO_ROOT / "tasks" / "deepswe-pilot-10.json"
+DEFAULT_RESULTS_ROOT = Path(os.environ.get("JEVBENCH_RESULTS_ROOT", str(REPO_ROOT / "results")))
+DEFAULT_PRUNE_SCRIPT = Path(os.environ.get("JEVBENCH_PRUNE_SCRIPT", "")) if os.environ.get("JEVBENCH_PRUNE_SCRIPT") else None
+DEFAULT_HARNESS_DIR = Path(os.environ.get("JEVBENCH_HARNESS_DIR", "./jev-codex-harness"))
+DEFAULT_AUTH_JSON = Path(os.environ.get("CODEX_AUTH_JSON_PATH", str(Path.home() / ".codex" / "auth.json")))
+DEFAULT_JEV_STATE = Path(os.environ.get("JEVBENCH_JEV_STATE_DIR", str(Path.home() / ".codex" / "codex-router")))
+DEFAULT_BASELINE_MODEL = "openai/gpt-6.2-sol"
+DEFAULT_BASELINE_EFFORT = "high"
+DEFAULT_JEV_PORT = 4319
+DEFAULT_BRIDGE_JEV_PORT = 4320
+DEFAULT_HOST_PROXY_PORT = 2080
+DEFAULT_BRIDGE_PROXY_PORT = 2081
+DEFAULT_BRIDGE_IP = "172.17.0.1"
+ENV_IMPORT_PATH = "jev_astra_bench.deepswe_env:JevbenchDockerEnvironment"
+
+
+def build_jev_codex_config_toml(
+    *,
+    jev_base_url: str = "http://host.docker.internal:4320/v1",
+    env_key: str = "OPENAI_API_KEY",
+    provider_id: str = "jev_bench",
+) -> str:
+    """Render Codex CLI ``config.toml`` routing ``jev/auto`` to local Jev server.
+
+    Uses ``env_key = "OPENAI_API_KEY"`` so Pier injects the local Jev caller
+    secret strictly from the parent process environment (never via ``--ae`` CLI
+    flags that Pier records into ``lock.json`` / ``config.json``).
+    """
+    return (
+        'model = "jev/auto"\n'
+        f'model_provider = "{provider_id}"\n'
+        "\n"
+        f"[model_providers.{provider_id}]\n"
+        'name = "Jev Codex Router (DeepSWE Benchmark)"\n'
+        'wire_api = "responses"\n'
+        f'base_url = "{jev_base_url}"\n'
+        f'env_key = "{env_key}"\n'
+        "requires_openai_auth = false\n"
+    )
+
+
+def expected_harness_policy_version(harness_dir: Path) -> str | None:
+    rp = harness_dir / "server" / "routing_policy.py"
+    if not rp.is_file():
+        return None
+    for line in rp.read_text(encoding="utf-8").splitlines():
+        if line.strip().startswith("POLICY_VERSION"):
+            _, rhs = line.split("=", 1)
+            return rhs.strip().strip('"').strip("'")
+    return None
+
+
+def check_jev_health(
+    *,
+    port: int = DEFAULT_JEV_PORT,
+    expected_policy: str | None = None,
+    timeout: float = 5.0,
+) -> dict[str, Any]:
+    conn = http.client.HTTPConnection("127.0.0.1", port, timeout=timeout)
+    try:
+        conn.request("GET", "/health")
+        resp = conn.getresponse()
+        raw = resp.read().decode("utf-8", errors="replace")
+        if resp.status != 200:
+            raise RuntimeError(f"Jev /health returned HTTP {resp.status}")
+        data = json.loads(raw)
+        if expected_policy and data.get("policy_version") != expected_policy:
+            raise RuntimeError(
+                f"Running Jev policy_version={data.get('policy_version')!r} "
+                f"differs from checkout {expected_policy!r}"
+            )
+        return data
+    finally:
+        conn.close()
+
+
+def resolve_jev_state_dir(path: Path) -> Path:
+    """Accept either the router state dir directly or a parent CODEX_HOME dir."""
+    direct = path / "generic-provider-credentials" / "jev.key"
+    if direct.is_file():
+        return path
+    nested = path / "codex-router"
+    if (nested / "generic-provider-credentials" / "jev.key").is_file():
+        return nested
+    return path
+
+
+def read_jev_caller_secret(jev_state_dir: Path) -> str:
+    resolved = resolve_jev_state_dir(jev_state_dir)
+    key_path = resolved / "generic-provider-credentials" / "jev.key"
+    if not key_path.is_file():
+        raise FileNotFoundError(
+            f"Jev caller credential not found at {key_path}. "
+            "Start jev-codex-harness with its isolated profile/state dir first."
+        )
+    secret = key_path.read_text(encoding="utf-8").strip()
+    if not secret:
+        raise ValueError(f"Empty Jev caller credential at {key_path}")
+    return secret
+
+
+def load_manifest(path: Path) -> dict[str, Any]:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data.get("tasks"), list) or not data["tasks"]:
+        raise ValueError(f"Manifest {path} contains no tasks")
+    return data
+
+
+def build_pier_command(
+    *,
+    task_dir: Path,
+    jobs_dir: Path,
+    mode: str,
+    baseline_model: str,
+    baseline_effort: str,
+    jev_config_toml_path: Path | None = None,
+    codex_version: str | None = None,
+    timeout_multiplier: float = 1.0,
+) -> list[str]:
+    cmd = [
+        "pier",
+        "run",
+        "-p",
+        task_dir.as_posix(),
+        "--agent",
+        "codex",
+        "--environment-import-path",
+        ENV_IMPORT_PATH,
+        "--jobs-dir",
+        jobs_dir.as_posix(),
+        "--timeout-multiplier",
+        str(timeout_multiplier),
+    ]
+    if codex_version:
+        cmd.extend(["--ak", f"version={codex_version}"])
+
+    if mode == "codex-baseline":
+        cmd.extend(
+            [
+                "--model",
+                baseline_model,
+                "--ak",
+                f"reasoning_effort={baseline_effort}",
+            ]
+        )
+    elif mode == "jev-auto":
+        if jev_config_toml_path is None:
+            raise ValueError("jev_config_toml_path is required for mode='jev-auto'")
+        cmd.extend(
+            [
+                "--model",
+                "jev/auto",
+                "--ak",
+                "command_model_name=jev/auto",
+                "--ak",
+                f"config_toml_file={jev_config_toml_path.as_posix()}",
+            ]
+        )
+    else:
+        raise ValueError(f"Unsupported mode: {mode!r}")
+
+    return cmd
+
+
+def _start_bridge(
+    *,
+    bind_host: str,
+    mappings: list[str],
+    bench_root: Path,
+) -> subprocess.Popen[str]:
+    env = dict(os.environ)
+    env["PYTHONPATH"] = str(bench_root) + (
+        ":" + env["PYTHONPATH"] if env.get("PYTHONPATH") else ""
+    )
+    cmd = [
+        sys.executable,
+        "-m",
+        "jev_astra_bench.deepswe_bridge",
+        "--bind-host",
+        bind_host,
+    ]
+    for m in mappings:
+        cmd.extend(["--map", m])
+    proc = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        env=env,
+    )
+    assert proc.stdout is not None
+    ready = proc.stdout.readline().strip()
+    if not ready.startswith("BRIDGE_READY"):
+        err = proc.stderr.read() if proc.stderr else ""
+        proc.terminate()
+        raise RuntimeError(f"TCP bridge failed to start: {ready!r} {err}")
+    return proc
+
+
+def _write_summary(run_dir: Path, summary: dict[str, Any]) -> None:
+    summary["updated_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    summary["aggregate"] = compute_aggregate(summary["pairs"], summary["modes"])
+    (run_dir / "summary.json").write_text(
+        json.dumps(summary, indent=2) + "\n", encoding="utf-8"
+    )
+    (run_dir / "summary.md").write_text(
+        render_markdown_summary(summary), encoding="utf-8"
+    )
+
+
+def run_paired_batch(args: argparse.Namespace) -> int:
+    manifest = load_manifest(Path(args.manifest))
+    corpus_dir = Path(args.corpus_dir or manifest["corpus_tasks_dir"])
+    modes: list[str] = list(args.modes)
+
+    tasks = list(manifest["tasks"])
+    if args.only_task:
+        wanted = set(args.only_task)
+        tasks = [t for t in tasks if t["task_id"] in wanted]
+    if args.start_index > 1:
+        tasks = [t for t in tasks if int(t.get("index", 0)) >= args.start_index]
+    if args.max_tasks > 0:
+        tasks = tasks[: args.max_tasks]
+    if not tasks:
+        print("No tasks selected.", file=sys.stderr)
+        return 2
+
+    run_name = args.run_name or datetime.now().strftime("deepswe-pair-%Y-%m-%d-%H%M%S")
+    run_dir = Path(args.results_root) / run_name
+    run_dir.mkdir(parents=True, exist_ok=True)
+
+    # Preflight checks before spending any quota
+    if "codex-baseline" in modes:
+        auth_path = Path(args.auth_json)
+        if not auth_path.is_file():
+            raise FileNotFoundError(f"Codex auth.json not found: {auth_path}")
+
+    jev_secret: str | None = None
+    jev_config_path: Path | None = None
+    jev_state_resolved = resolve_jev_state_dir(Path(args.jev_state_dir))
+    jev_log_path = jev_state_resolved / "jev-router-live.jsonl"
+    if "jev-auto" in modes:
+        exp_policy = expected_harness_policy_version(Path(args.harness_dir))
+        health = check_jev_health(port=args.jev_port, expected_policy=exp_policy)
+        print(
+            f"[preflight] Jev healthy on :{args.jev_port}, "
+            f"policy={health.get('policy_version')}",
+            flush=True,
+        )
+        jev_secret = read_jev_caller_secret(jev_state_resolved)
+        jev_config_path = run_dir / "jev-codex-config.toml"
+        jev_config_path.write_text(
+            build_jev_codex_config_toml(
+                jev_base_url=f"http://host.docker.internal:{args.bridge_jev_port}/v1"
+            ),
+            encoding="utf-8",
+        )
+
+    summary_path = run_dir / "summary.json"
+    if args.resume and summary_path.is_file():
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        pair_by_id = {p["task_id"]: p for p in summary.get("pairs", [])}
+    else:
+        pair_by_id = {}
+        summary = {
+            "schema_version": 1,
+            "run_name": run_name,
+            "manifest_name": manifest.get("name"),
+            "modes": modes,
+            "baseline_model": args.baseline_model,
+            "baseline_effort": args.baseline_effort,
+            "pairs": [],
+        }
+
+    for t in tasks:
+        if t["task_id"] not in pair_by_id:
+            entry = {
+                "index": t["index"],
+                "task_id": t["task_id"],
+                "language": t["language"],
+                "runs": {},
+            }
+            summary["pairs"].append(entry)
+            pair_by_id[t["task_id"]] = entry
+
+    bench_root = Path(__file__).resolve().parent.parent
+    bridge_maps = [f"{args.bridge_proxy_port}:{args.host_proxy_port}"]
+    if "jev-auto" in modes:
+        bridge_maps.append(f"{args.bridge_jev_port}:{args.jev_port}")
+
+    bridge_proc = _start_bridge(
+        bind_host=args.bridge_ip, mappings=bridge_maps, bench_root=bench_root
+    )
+    try:
+        for task in tasks:
+            task_id = task["task_id"]
+            task_dir = corpus_dir / task_id
+            pair_entry = pair_by_id[task_id]
+
+            for mode in modes:
+                existing = (pair_entry.get("runs") or {}).get(mode)
+                if args.resume and existing and existing.get("valid"):
+                    print(f"[skip] {task_id} ({mode}) already valid", flush=True)
+                    continue
+
+                jobs_dir = run_dir / task_id / mode
+                jobs_dir.mkdir(parents=True, exist_ok=True)
+                cmd = build_pier_command(
+                    task_dir=task_dir,
+                    jobs_dir=jobs_dir,
+                    mode=mode,
+                    baseline_model=args.baseline_model,
+                    baseline_effort=args.baseline_effort,
+                    jev_config_toml_path=jev_config_path,
+                    codex_version=args.codex_version,
+                    timeout_multiplier=args.timeout_multiplier,
+                )
+
+                env = dict(os.environ)
+                env["PYTHONPATH"] = str(bench_root) + (
+                    ":" + env["PYTHONPATH"] if env.get("PYTHONPATH") else ""
+                )
+                env["JEVBENCH_BUILD_PROXY"] = f"http://127.0.0.1:{args.host_proxy_port}"
+                env["JEVBENCH_UPSTREAM_PROXY_HOST"] = "host.docker.internal"
+                env["JEVBENCH_UPSTREAM_PROXY_PORT"] = str(args.bridge_proxy_port)
+                env["JEVBENCH_EXTRA_SAFE_PORTS"] = (
+                    f"{args.jev_port},{args.bridge_jev_port},4202"
+                )
+
+                if mode == "codex-baseline":
+                    env["CODEX_AUTH_JSON_PATH"] = str(args.auth_json)
+                    env.pop("OPENAI_API_KEY", None)
+                elif mode == "jev-auto":
+                    assert jev_secret is not None
+                    env.pop("CODEX_AUTH_JSON_PATH", None)
+                    env.pop("CODEX_FORCE_AUTH_JSON", None)
+                    env["OPENAI_API_KEY"] = jev_secret
+
+                jev_start_line = count_lines(jev_log_path) if mode == "jev-auto" else 0
+                print(
+                    f"[run] task={task_id} mode={mode} -> {jobs_dir}",
+                    flush=True,
+                )
+                t0 = time.monotonic()
+                proc = subprocess.run(cmd, env=env, check=False)
+                wall_sec = time.monotonic() - t0
+
+                trial_dir = find_latest_trial_dir(jobs_dir, task_id)
+                jev_records = (
+                    read_jev_log_slice(jev_log_path, jev_start_line)
+                    if mode == "jev-auto"
+                    else None
+                )
+                rec = extract_trial_summary(
+                    trial_dir,
+                    mode=mode,
+                    task_id=task_id,
+                    jev_records=jev_records,
+                    returncode=proc.returncode,
+                    wall_sec=wall_sec,
+                )
+                pair_entry["runs"][mode] = rec
+                _write_summary(run_dir, summary)
+
+            if args.prune_after_pair and DEFAULT_PRUNE_SCRIPT and DEFAULT_PRUNE_SCRIPT.is_file():
+                subprocess.run(
+                    ["bash", str(DEFAULT_PRUNE_SCRIPT)], check=False
+                )
+    finally:
+        bridge_proc.terminate()
+        try:
+            bridge_proc.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            bridge_proc.kill()
+
+    print(f"Summary written to {run_dir / 'summary.md'}", flush=True)
+    return 0
+
+
+def build_parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(
+        description="Run paired DeepSWE comparisons (codex-baseline vs jev-auto)."
+    )
+    p.add_argument("--manifest", default=str(DEFAULT_MANIFEST))
+    p.add_argument("--corpus-dir", default="")
+    p.add_argument("--results-root", default=str(DEFAULT_RESULTS_ROOT))
+    p.add_argument("--run-name", default="")
+    p.add_argument(
+        "--modes",
+        nargs="+",
+        default=["codex-baseline", "jev-auto"],
+        choices=["codex-baseline", "jev-auto"],
+    )
+    p.add_argument("--only-task", action="append", default=[])
+    p.add_argument("--start-index", type=int, default=1)
+    p.add_argument("--max-tasks", type=int, default=0)
+    p.add_argument("--resume", action="store_true")
+    p.add_argument("--baseline-model", default=DEFAULT_BASELINE_MODEL)
+    p.add_argument("--baseline-effort", default=DEFAULT_BASELINE_EFFORT)
+    p.add_argument("--codex-version", default="")
+    p.add_argument("--auth-json", default=str(DEFAULT_AUTH_JSON))
+    p.add_argument("--harness-dir", default=str(DEFAULT_HARNESS_DIR))
+    p.add_argument("--jev-state-dir", default=str(DEFAULT_JEV_STATE))
+    p.add_argument("--jev-port", type=int, default=DEFAULT_JEV_PORT)
+    p.add_argument("--bridge-jev-port", type=int, default=DEFAULT_BRIDGE_JEV_PORT)
+    p.add_argument("--host-proxy-port", type=int, default=DEFAULT_HOST_PROXY_PORT)
+    p.add_argument("--bridge-proxy-port", type=int, default=DEFAULT_BRIDGE_PROXY_PORT)
+    p.add_argument("--bridge-ip", default=DEFAULT_BRIDGE_IP)
+    p.add_argument("--timeout-multiplier", type=float, default=1.0)
+    p.add_argument(
+        "--prune-after-pair",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+    )
+    return p
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    return run_paired_batch(args)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "name": "deepswe-pilot-10",
+  "corpus": "datacurve-ai/deep-swe",
+  "corpus_tasks_dir": "./deep-swe/tasks",
+  "description": "Stratified 10-task DeepSWE paired pilot (3 Go, 3 TypeScript, 3 Python, 1 Rust); task #1 is the pre-verified canary.",
+  "target_comparison": {
+    "baseline": {
+      "mode": "codex-baseline",
+      "model": "openai/gpt-6.2-sol",
+      "reasoning_effort": "high",
+      "auth": "chatgpt_subscription_auth_json"
+    },
+    "treatment": {
+      "mode": "jev-auto",
+      "model": "jev/auto",
+      "harness_repo": "teo-nex/jev-codex-harness",
+      "harness_commit": "cea6502c8c968cef34602be4a7247ebda5d5e84c",
+      "policy_version": "split-v17-terra6.1-default-sol6.2-hard"
+    }
+  },
+  "tasks": [
+    {
+      "index": 1,
+      "task_id": "abs-module-cache-flags",
+      "canary": true,
+      "language": "go",
+      "category": "enhancement",
+      "repository_url": "https://github.com/abs-lang/abs",
+      "base_commit_hash": "cb1b3b671d0ee9fa9da9f7b02f86967953ffd10a",
+      "docker_image": "public.ecr.aws/d3j8x8q7/swe-bench-202605:kh75679ajj3b8dtd7se3h7z0a1833y6r-v1.1",
+      "instruction_chars": 2624,
+      "agent_network_mode": "no-network",
+      "verifier_network_mode": "no-network"
+    },
+    {
+      "index": 2,
+      "task_id": "expr-try-catch-errors",
+      "canary": false,
+      "language": "go",
+      "category": "feature_request",
+      "repository_url": "https://github.com/expr-lang/expr",
+      "base_commit_hash": "851b241a301f7c74646e65e4009c69cf290993a8",
+      "docker_image": "public.ecr.aws/d3j8x8q7/swe-bench-202605:kh71gkadwafw4ry4r6g37era0182qpms-v1.1",
+      "instruction_chars": 1456,
+      "agent_network_mode": "no-network",
+      "verifier_network_mode": "no-network"
+    },
+    {
+      "index": 3,
+      "task_id": "scc-bounded-memory-spilling",
+      "canary": false,
+      "language": "go",
+      "category": "feature_request",
+      "repository_url": "https://github.com/boyter/scc.git",
+      "base_commit_hash": "bc2796e01998ebc2d40818323f93113aed2542ea",
+      "docker_image": "public.ecr.aws/d3j8x8q7/swe-bench-202605:kh71j0gr2axgn6v1f92cam6s6x82rkv6-v1.1",
+      "instruction_chars": 2016,
+      "agent_network_mode": "no-network",
+      "verifier_network_mode": "no-network"
+    },
+    {
+      "index": 4,
+      "task_id": "happy-dom-abort-pending-body-reads",
+      "canary": false,
+      "language": "typescript",
+      "category": "bugfix",
+      "repository_url": "https://github.com/capricorn86/happy-dom",
+      "base_commit_hash": "82a0888cb2c87a6123e05424b528f8e8c9b3e426",
+      "docker_image": "public.ecr.aws/d3j8x8q7/swe-bench-202605:kh7c2re7cvbseq7xz6samd1xr182y1dc-v1.1",
+      "instruction_chars": 764,
+      "agent_network_mode": "no-network",
+      "verifier_network_mode": "no-network"
+    },
+    {
+      "index": 5,
+      "task_id": "meriyah-explicit-resource-declarations",
+      "canary": false,
+      "language": "typescript",
+      "category": "feature_request",
+      "repository_url": "https://github.com/meriyah/meriyah",
+      "base_commit_hash": "d141eb14a40b79c04d1b1db5c20c6afa3844c0d9",
+      "docker_image": "public.ecr.aws/d3j8x8q7/swe-bench-202605:kh7398skqnxqwg9hbmdj7ncmk1822aa0-v1.1",
+      "instruction_chars": 1356,
+      "agent_network_mode": "no-network",
+      "verifier_network_mode": "no-network"
+    },
+    {
+      "index": 6,
+      "task_id": "arktype-json-schema-refs-dependencies",
+      "canary": false,
+      "language": "typescript",
+      "category": "feature_request",
+      "repository_url": "https://github.com/arktypeio/arktype",
+      "base_commit_hash": "04355e8b26d1ad5264ef62314a2bc46c4de58ed8",
+      "docker_image": "public.ecr.aws/d3j8x8q7/swe-bench-202605:kh771gpr8crkjsnt9pj81bafgs8229em-v1.1",
+      "instruction_chars": 1993,
+      "agent_network_mode": "no-network",
+      "verifier_network_mode": "no-network"
+    },
+    {
+      "index": 7,
+      "task_id": "mashumaro-flattened-dataclass-fields",
+      "canary": false,
+      "language": "python",
+      "category": "feature_request",
+      "repository_url": "https://github.com/Fatal1ty/mashumaro",
+      "base_commit_hash": "de139fd51c4d347666d109a8aea9d25451d908f6",
+      "docker_image": "public.ecr.aws/d3j8x8q7/swe-bench-202605:kh70k6aj3y457hgtraar0rmgdn822qx8-v1.1",
+      "instruction_chars": 571,
+      "agent_network_mode": "no-network",
+      "verifier_network_mode": "no-network"
+    },
+    {
+      "index": 8,
+      "task_id": "fastapi-implicit-head-options",
+      "canary": false,
+      "language": "python",
+      "category": "feature_request",
+      "repository_url": "https://github.com/fastapi/fastapi",
+      "base_commit_hash": "11614be9021aa4ac078d4d0693a8b5250a1010d8",
+      "docker_image": "public.ecr.aws/d3j8x8q7/swe-bench-202605:kh7191qb52n5pfwh0a4yhahmt18343sn-v1.1",
+      "instruction_chars": 1702,
+      "agent_network_mode": "no-network",
+      "verifier_network_mode": "no-network"
+    },
+    {
+      "index": 9,
+      "task_id": "vulture-persistent-analysis-cache",
+      "canary": false,
+      "language": "python",
+      "category": "feature_request",
+      "repository_url": "https://github.com/jendrikseipp/vulture",
+      "base_commit_hash": "1eb212f0a0707ad6f4c720bb2010c2b7517cf0f9",
+      "docker_image": "public.ecr.aws/d3j8x8q7/swe-bench-202605:kh7992s6336c7yhv34x198jqy182zpmt-v1.1",
+      "instruction_chars": 2380,
+      "agent_network_mode": "no-network",
+      "verifier_network_mode": "no-network"
+    },
+    {
+      "index": 10,
+      "task_id": "oxvg-structural-selector-preservation",
+      "canary": false,
+      "language": "rust",
+      "category": "enhancement",
+      "repository_url": "https://github.com/noahbald/oxvg",
+      "base_commit_hash": "1fd7fab851ecc975e008be0e3e279568ce4e2b51",
+      "docker_image": "public.ecr.aws/d3j8x8q7/swe-bench-202605:kh749pxv8w35vksyfhe7p8tg8x82p0vg-v1.1",
+      "instruction_chars": 856,
+      "agent_network_mode": "no-network",
+      "verifier_network_mode": "no-network"
+    }
+  ]
+}
