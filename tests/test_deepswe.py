@@ -10,6 +10,7 @@ from pathlib import Path
 
 from jev_astra_bench.deepswe_bridge import LocalTcpBridge, PortMapping, parse_mapping
 from jev_astra_bench.deepswe_env import (
+    CONTAINER_MODEL_CATALOG_PATH,
     DEFAULT_EXTRA_ALLOW_DOMAINS,
     build_main_build_override_dict,
     build_squid_bootstrap_script,
@@ -30,6 +31,7 @@ from jev_astra_bench.deepswe_runner import (
     expected_harness_policy_version,
     load_manifest,
     read_jev_caller_secret,
+    resolve_jev_model_catalog,
     resolve_jev_state_dir,
 )
 
@@ -110,15 +112,17 @@ class TestDeepSweEnvHelpers(unittest.TestCase):
         main_override = build_main_build_override_dict("http://127.0.0.1:2080")
         self.assertEqual(main_override["services"]["main"]["build"]["network"], "host")
 
-    def test_cached_codex_dockerfile_injects_local_binaries(self) -> None:
+    def test_cached_codex_dockerfile_injects_local_binaries_and_catalog(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)
             fake_codex = tmp_path / "codex"
             fake_rg = tmp_path / "rg"
             fake_cmh = tmp_path / "codex-code-mode-host"
+            fake_cat = tmp_path / "merged-models.json"
             fake_codex.write_bytes(b"ELF-codex")
             fake_rg.write_bytes(b"ELF-rg")
             fake_cmh.write_bytes(b"ELF-cmh")
+            fake_cat.write_text('{"models":[{"slug":"jev/auto"}]}\n', encoding="utf-8")
             build_dir = tmp_path / "ctx"
             df = write_cached_codex_dockerfile(
                 build_dir=build_dir,
@@ -127,6 +131,7 @@ class TestDeepSweEnvHelpers(unittest.TestCase):
                 codex_binary=fake_codex,
                 rg_binary=fake_rg,
                 code_mode_host_binary=fake_cmh,
+                model_catalog_json=fake_cat,
             )
             txt = df.read_text(encoding="utf-8")
             self.assertIn("FROM example/task:v1", txt)
@@ -136,10 +141,18 @@ class TestDeepSweEnvHelpers(unittest.TestCase):
                 "COPY .jevbench-codex-bin/codex-code-mode-host /usr/local/bin/codex-code-mode-host",
                 txt,
             )
+            self.assertIn(
+                f"COPY .jevbench-codex-bin/merged-models.json {CONTAINER_MODEL_CATALOG_PATH}",
+                txt,
+            )
+            self.assertIn(f"chmod 644 {CONTAINER_MODEL_CATALOG_PATH}", txt)
             self.assertTrue((build_dir / ".jevbench-codex-bin" / "codex").is_file())
             self.assertTrue((build_dir / ".jevbench-codex-bin" / "rg").is_file())
             self.assertTrue(
                 (build_dir / ".jevbench-codex-bin" / "codex-code-mode-host").is_file()
+            )
+            self.assertTrue(
+                (build_dir / ".jevbench-codex-bin" / "merged-models.json").is_file()
             )
 
     def test_resolve_default_codex_binary_dir_prefers_first_existing(self) -> None:
@@ -156,13 +169,33 @@ class TestDeepSweEnvHelpers(unittest.TestCase):
 class TestDeepSweRunnerHelpers(unittest.TestCase):
     def test_jev_config_toml_uses_env_key_without_leaking_secret(self) -> None:
         toml_text = build_jev_codex_config_toml(
-            jev_base_url="http://host.docker.internal:4319/v1"
+            jev_base_url="http://host.docker.internal:4319/v1",
+            model_catalog_json=CONTAINER_MODEL_CATALOG_PATH,
         )
         self.assertIn('model = "jev/auto"', toml_text)
+        self.assertIn(
+            f'model_catalog_json = "{CONTAINER_MODEL_CATALOG_PATH}"', toml_text
+        )
         self.assertIn('wire_api = "responses"', toml_text)
         self.assertIn('base_url = "http://host.docker.internal:4319/v1"', toml_text)
         self.assertIn('env_key = "OPENAI_API_KEY"', toml_text)
         self.assertIn("requires_openai_auth = false", toml_text)
+
+    def test_resolve_jev_model_catalog_validates_jev_auto_slug(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            state = Path(tmp) / "codex-router"
+            creds = state / "generic-provider-credentials"
+            creds.mkdir(parents=True)
+            (creds / "jev.key").write_text("tok\n", encoding="utf-8")
+            cat = state / "merged-models.json"
+            cat.write_text('{"models":[{"slug":"gpt-6.2-sol"}]}\n', encoding="utf-8")
+            with self.assertRaises(ValueError):
+                resolve_jev_model_catalog(state)
+            cat.write_text(
+                '{"models":[{"slug":"gpt-6.2-sol"},{"slug":"jev/auto"}]}\n',
+                encoding="utf-8",
+            )
+            self.assertEqual(resolve_jev_model_catalog(state), cat)
 
     def test_build_pier_command_modes(self) -> None:
         base_cmd = build_pier_command(

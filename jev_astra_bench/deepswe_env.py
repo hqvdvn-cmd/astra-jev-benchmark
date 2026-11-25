@@ -1,15 +1,17 @@
-"""Custom Pier DockerEnvironment for isolated DeepSWE runs inside WSL2/Linux.
+"""Custom Pier DockerEnvironment for JEVBENCH DeepSWE runs inside WSL2.
 
 Handles four host-specific requirements without modifying site-packages:
 1. Fast, deterministic offline Codex CLI injection when a pinned Linux x64
    binary is cached in ``JEVBENCH_CODEX_BINARY_DIR`` (seconds per task instead
    of re-downloading nvm + Node + npm on every task image), with fallback to
-   build.network=host + build.args proxy when building from scratch.
+   build.network=host + build.args proxy when building from scratch. Optionally
+   injects an official ``merged-models.json`` catalog for ``jev/auto`` so Codex
+   CLI loads real model metadata instead of defaulting to fallback metadata.
 2. Runtime isolation preserved: ``main`` stays strictly on the internal Docker
    network (``pier-egress-internal``) and can reach only the Squid policy proxy.
 3. Expanded egress allowlist for ChatGPT subscription Codex CLI (``chatgpt.com``,
    ``auth.openai.com``, ``api.openai.com``) and local ``host.docker.internal``
-   routing to ``teo-nex/jev-codex-harness`` (``jev_server.py`` on :4319).
+   routing to ``jew-codex-harness`` (``jev_server.py`` on :4319 / ``router.mjs`` on :4202).
 4. Upstream Squid ``cache_peer`` forwarding external allowlisted traffic via the
    local Docker-bridge proxy forwarder (``host.docker.internal:2081 -> 127.0.0.1:2080``)
    while routing ``host.docker.internal`` directly (``always_direct``).
@@ -17,6 +19,7 @@ Handles four host-specific requirements without modifying site-packages:
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import shutil
@@ -26,7 +29,11 @@ from typing import Any
 DEFAULT_BUILD_PROXY = "http://127.0.0.1:2080"
 DEFAULT_UPSTREAM_PROXY_HOST = "host.docker.internal"
 DEFAULT_UPSTREAM_PROXY_PORT = 2081
-DEFAULT_CODEX_BINARY_DIRS = ("/opt/jevbench-codex-bin",)
+CONTAINER_MODEL_CATALOG_PATH = "/usr/local/share/jevbench/merged-models.json"
+DEFAULT_CODEX_BINARY_DIRS = (
+    "/opt/jevbench-codex-bin",
+    "/mnt/e/PROJECT/JEVBENCH/runtime/codex-bin",
+)
 DEFAULT_EXTRA_ALLOW_DOMAINS = (
     "api.openai.com",
     "auth.openai.com",
@@ -41,7 +48,7 @@ EGRESS_PROXY_PORT = 8080
 def resolve_default_codex_binary_dir(
     candidates: tuple[str, ...] = DEFAULT_CODEX_BINARY_DIRS,
 ) -> str:
-    """Return the first candidate directory containing a cached ``codex`` binary."""
+    """Prefer fast ext4 cached binary dir inside WSL2, falling back to E:."""
     for candidate in candidates:
         if (Path(candidate) / "codex").is_file():
             return candidate
@@ -102,6 +109,7 @@ def write_cached_codex_dockerfile(
     codex_binary: Path,
     rg_binary: Path | None = None,
     code_mode_host_binary: Path | None = None,
+    model_catalog_json: Path | None = None,
 ) -> Path:
     """Write a fast offline Dockerfile injecting pinned Linux x64 codex (+ helpers)."""
     build_dir.mkdir(parents=True, exist_ok=True)
@@ -129,9 +137,16 @@ def write_cached_codex_dockerfile(
             "/usr/local/bin/codex-code-mode-host"
         )
         chmod_targets.append("/usr/local/bin/codex-code-mode-host")
+    catalog_chmod = ""
+    if model_catalog_json is not None and model_catalog_json.is_file():
+        shutil.copy2(model_catalog_json, bin_stage / "merged-models.json")
+        lines.append(
+            f"COPY .jevbench-codex-bin/merged-models.json {CONTAINER_MODEL_CATALOG_PATH}"
+        )
+        catalog_chmod = f" && chmod 644 {CONTAINER_MODEL_CATALOG_PATH}"
 
     lines.append(
-        f"RUN chmod 755 {' '.join(chmod_targets)} && /usr/local/bin/codex --version"
+        f"RUN chmod 755 {' '.join(chmod_targets)}{catalog_chmod} && /usr/local/bin/codex --version"
     )
     lines.append("")
     dockerfile_path = build_dir / "Dockerfile"
@@ -172,10 +187,10 @@ def build_squid_bootstrap_script(
         "#!/usr/bin/env bash\n"
         "set -eu\n"
         "\n"
-        "printf '%s' \"$ALLOWLIST_DOMAINS\" | tr ',' '\\n' | sed '/^[[:space:]]*$/d' \\\n"
+        'printf \'%s\' "$ALLOWLIST_DOMAINS" | tr \',\' \'\\n\' | sed \'/^[[:space:]]*$/d\' \\\n'
         "  > /tmp/allowed_domains.txt\n"
         "\n"
-        "htpasswd -bc /tmp/squid.passwd agent \"$PROXY_TOKEN\"\n"
+        'htpasswd -bc /tmp/squid.passwd agent "$PROXY_TOKEN"\n'
         "\n"
         "cat > /tmp/squid.conf <<'EOF'\n"
         "http_port 0.0.0.0:8080\n"
@@ -343,6 +358,7 @@ if DockerEnvironment is not None:
             extra_allow_domains: str | list[str] | None = None,
             extra_safe_ports: str | list[int] | None = None,
             codex_binary_dir: str | None = None,
+            model_catalog_json: str | None = None,
             **kwargs: Any,
         ) -> None:
             env_build_proxy = os.environ.get("JEVBENCH_BUILD_PROXY", DEFAULT_BUILD_PROXY)
@@ -375,6 +391,11 @@ if DockerEnvironment is not None:
                 self._jev_codex_binary_dir = env_codex_dir
             else:
                 self._jev_codex_binary_dir = resolve_default_codex_binary_dir()
+
+            env_catalog = os.environ.get("JEVBENCH_MODEL_CATALOG_JSON")
+            self._jev_model_catalog_json = (
+                model_catalog_json if model_catalog_json is not None else env_catalog
+            ) or None
 
             if extra_allow_domains is None:
                 raw_domains = os.environ.get("JEVBENCH_EXTRA_ALLOW_DOMAINS")
@@ -435,14 +456,28 @@ if DockerEnvironment is not None:
                 code_mode_host_bin = (
                     Path(self._jev_codex_binary_dir) / "codex-code-mode-host"
                 )
+                catalog_path = (
+                    Path(self._jev_model_catalog_json)
+                    if self._jev_model_catalog_json
+                    else None
+                )
+                fp_suffix = ""
+                if catalog_path is not None and catalog_path.is_file():
+                    digest = hashlib.sha256(catalog_path.read_bytes()).hexdigest()[:12]
+                    fp_suffix = f"-cat-{digest}"
                 write_cached_codex_dockerfile(
                     build_dir=build_dir,
                     prebuilt_image_name=self.task_env_config.docker_image,
-                    fingerprint=f"cached-codex-v2-{install.fingerprint()}",
+                    fingerprint=f"cached-codex-v2-{install.fingerprint()}{fp_suffix}",
                     codex_binary=cached_codex,
                     rg_binary=rg_bin if rg_bin.is_file() else None,
                     code_mode_host_binary=(
                         code_mode_host_bin if code_mode_host_bin.is_file() else None
+                    ),
+                    model_catalog_json=(
+                        catalog_path
+                        if catalog_path is not None and catalog_path.is_file()
+                        else None
                     ),
                 )
                 self._agent_build_context_dir = build_dir
